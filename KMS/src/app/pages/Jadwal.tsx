@@ -1,8 +1,24 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
-import { jadwalList } from "../data/mockData";
+import { fetchSchedules } from "../data/api";
 
 export function Jadwal() {
+  const [schedulesList, setSchedulesList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSchedules()
+      .then(res => {
+        setSchedulesList(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching schedules:", err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
@@ -12,8 +28,11 @@ export function Jadwal() {
       </div>
 
       <div className="space-y-4">
-        {jadwalList.map(item => {
-          const isFull = item.status === "Kuota Penuh";
+        {loading ? (
+          <p className="text-sm text-[#64748B]">Memuat jadwal...</p>
+        ) : (
+          schedulesList.map(item => {
+            const isFull = item.status === "Kuota Penuh";
           return (
             <div
               key={item.id}
@@ -54,7 +73,8 @@ export function Jadwal() {
               </div>
             </div>
           );
-        })}
+        })
+      )}
       </div>
     </div>
   );

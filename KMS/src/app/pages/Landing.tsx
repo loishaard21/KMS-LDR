@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { Search, Calendar, MapPin, Users, ChevronRight, Download, ArrowUpRight, Award, BookOpen, FileText, BarChart3, CheckCircle } from "lucide-react";
-import { seminars, articles, materials } from "../data/mockData";
+import { fetchSeminars, fetchArticles, fetchMaterials } from "../data/api";
 
 function ModeBadge({ mode }: { mode: string }) {
   const colors: Record<string, string> = {
@@ -37,7 +37,7 @@ function CapacityBar({ registered, capacity }: { registered: number; capacity: n
   );
 }
 
-function SeminarCard({ seminar }: { seminar: (typeof seminars)[0] }) {
+function SeminarCard({ seminar }: { seminar: any }) {
   const isFull = seminar.status === "Kuota Penuh";
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] hover:shadow-lg transition-shadow" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.05)" }}>
@@ -114,6 +114,24 @@ function SeminarCard({ seminar }: { seminar: (typeof seminars)[0] }) {
 export function Landing() {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const [seminarList, setSeminarList] = useState<any[]>([]);
+  const [articleList, setArticleList] = useState<any[]>([]);
+  const [materialList, setMaterialList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([fetchSeminars(), fetchArticles(), fetchMaterials()])
+      .then(([sems, arts, mats]) => {
+        setSeminarList(sems);
+        setArticleList(arts);
+        setMaterialList(mats);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Fetch landing data error:", err);
+        setLoading(false);
+      });
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -194,7 +212,11 @@ export function Landing() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {seminars.slice(0, 3).map(s => <SeminarCard key={s.id} seminar={s} />)}
+          {loading ? (
+            <p className="text-xs text-[#64748B]">Memuat agenda...</p>
+          ) : (
+            seminarList.slice(0, 3).map(s => <SeminarCard key={s.id} seminar={s} />)
+          )}
         </div>
       </section>
 
@@ -271,24 +293,28 @@ export function Landing() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {articles.map(article => (
-            <div key={article.id} className="bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] hover:shadow-md transition-shadow" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.05)" }}>
-              <div className="relative h-44 overflow-hidden">
-                <img src={article.cover} alt={article.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-3 left-3">
-                  <span className="text-xs bg-[#0052CC] text-white px-2 py-0.5 rounded-full">{article.category}</span>
+          {loading ? (
+            <p className="text-xs text-[#64748B]">Memuat artikel...</p>
+          ) : (
+            articleList.map(article => (
+              <div key={article.id} className="bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] hover:shadow-md transition-shadow" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.05)" }}>
+                <div className="relative h-44 overflow-hidden">
+                  <img src={article.cover} alt={article.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-xs bg-[#0052CC] text-white px-2 py-0.5 rounded-full">{article.category}</span>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <p className="text-[#94A3B8] text-xs mb-2">{article.date}</p>
+                  <h3 className="font-semibold text-[#1A2332] text-sm leading-snug mb-2 line-clamp-2">{article.title}</h3>
+                  <p className="text-[#64748B] text-xs leading-relaxed mb-4 line-clamp-3">{article.excerpt}</p>
+                  <Link to={`/artikel/${article.id}`} className="text-[#0052CC] text-xs font-medium hover:underline flex items-center gap-1">
+                    Baca Selengkapnya <ChevronRight size={12} />
+                  </Link>
                 </div>
               </div>
-              <div className="p-5">
-                <p className="text-[#94A3B8] text-xs mb-2">{article.date}</p>
-                <h3 className="font-semibold text-[#1A2332] text-sm leading-snug mb-2 line-clamp-2">{article.title}</h3>
-                <p className="text-[#64748B] text-xs leading-relaxed mb-4 line-clamp-3">{article.excerpt}</p>
-                <Link to={`/artikel/${article.id}`} className="text-[#0052CC] text-xs font-medium hover:underline flex items-center gap-1">
-                  Baca Selengkapnya <ChevronRight size={12} />
-                </Link>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
 
@@ -300,24 +326,28 @@ export function Landing() {
             <h2 className="text-2xl font-bold text-[#1A2332]">Materi & Dokumen</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {materials.map(mat => (
-              <div key={mat.id} className="p-5 rounded-2xl border border-[#E2E8F0] hover:border-[#0052CC]/30 bg-[#F8FAFC] hover:bg-white transition-all group" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.03)" }}>
-                <div className="text-3xl mb-3">{mat.icon}</div>
-                <h3 className="font-semibold text-[#1A2332] text-sm mb-2 leading-snug">{mat.title}</h3>
-                <p className="text-[#64748B] text-xs leading-relaxed mb-3">{mat.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#94A3B8]">{mat.type} · {mat.size}</span>
-                  <a
-                    href={mat.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-1 text-xs font-medium text-[#0052CC] hover:text-[#003D99]"
-                  >
-                    <Download size={12} /> Unduh
-                  </a>
+            {loading ? (
+              <p className="text-xs text-[#64748B]">Memuat materi...</p>
+            ) : (
+              materialList.map(mat => (
+                <div key={mat.id} className="p-5 rounded-2xl border border-[#E2E8F0] hover:border-[#0052CC]/30 bg-[#F8FAFC] hover:bg-white transition-all group" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.03)" }}>
+                  <div className="text-3xl mb-3">{mat.icon}</div>
+                  <h3 className="font-semibold text-[#1A2332] text-sm mb-2 leading-snug">{mat.title}</h3>
+                  <p className="text-[#64748B] text-xs leading-relaxed mb-3">{mat.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[#94A3B8]">{mat.type} · {mat.size}</span>
+                    <a
+                      href={mat.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 text-xs font-medium text-[#0052CC] hover:text-[#003D99]"
+                    >
+                      <Download size={12} /> Unduh
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>

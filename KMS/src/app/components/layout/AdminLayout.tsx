@@ -8,17 +8,27 @@ import {
   User, Tag, MonitorCheck, BookMarked, ChevronDown,
 } from "lucide-react";
 
-const operatorMenuItems = [
+interface MenuItem {
+  label: string;
+  icon: any;
+  path: string;
+  children?: { label: string; path: string }[];
+}
+
+const operatorMenuItems: MenuItem[] = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/operator/dashboard" },
   { label: "Kelola Seminar", icon: BookOpen, path: "/operator/kelola-seminar" },
   { label: "Kelola Materi", icon: FileText, path: "/operator/kelola-materi" },
   { label: "Kelola Jadwal", icon: Calendar, path: "/operator/kelola-jadwal" },
   { label: "Kelola Artikel", icon: Newspaper, path: "/operator/kelola-artikel" },
+  { label: "Kelola Gallery", icon: Image, path: "/operator/kelola-gallery" },
+  { label: "Kelola Panduan", icon: BookOpen, path: "/operator/kelola-panduan" },
   { label: "Data Peserta", icon: Users, path: "/operator/data-peserta" },
   { label: "Upload Informasi", icon: Upload, path: "/operator/upload-informasi" },
+  { label: "Profil Saya", icon: User, path: "/operator/profil" },
 ];
 
-const superAdminMenuItems = [
+const superAdminMenuItems: MenuItem[] = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/superadmin/dashboard" },
   { label: "Indikator Pengetahuan", icon: BarChart3, path: "/superadmin/indikator" },
   { label: "Pages", icon: Layers, path: "/superadmin/pages" },
@@ -32,6 +42,7 @@ const superAdminMenuItems = [
     ],
   },
   { label: "Post Category", icon: Tag, path: "/superadmin/post-category" },
+  { label: "Kelola Panduan", icon: BookOpen, path: "/superadmin/kelola-panduan" },
   { label: "Agenda", icon: Calendar, path: "/superadmin/agenda" },
   { label: "Download", icon: Download, path: "/superadmin/download" },
   { label: "Download Category", icon: BookMarked, path: "/superadmin/download-category" },

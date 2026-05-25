@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import { Search, Calendar, MapPin, ArrowUpRight, Filter } from "lucide-react";
-import { seminars } from "../data/mockData";
+import { fetchSeminars } from "../data/api";
 
 function ModeBadge({ mode }: { mode: string }) {
   const colors: Record<string, string> = {
@@ -42,8 +42,22 @@ export function SeminarList() {
   const [search, setSearch] = useState(searchParams.get("q") || "");
   const [filterMode, setFilterMode] = useState("Semua");
   const [filterStatus, setFilterStatus] = useState("Semua");
+  const [seminarList, setSeminarList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = seminars.filter(s => {
+  useEffect(() => {
+    fetchSeminars()
+      .then(res => {
+        setSeminarList(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching seminars:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const filtered = seminarList.filter(s => {
     const matchSearch = s.title.toLowerCase().includes(search.toLowerCase()) ||
       s.category.toLowerCase().includes(search.toLowerCase()) ||
       s.speaker.toLowerCase().includes(search.toLowerCase());

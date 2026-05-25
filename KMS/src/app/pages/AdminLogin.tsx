@@ -28,7 +28,7 @@ export function AdminLogin() {
 
   const fillCredentials = (role: "operator" | "superadmin") => {
     if (role === "operator") {
-      setEmail("operator@lampungprov.go.id");
+      setEmail("rini.agustina@lampungprov.go.id");
       setPassword("operator123");
     } else {
       setEmail("admin@lampungprov.go.id");
@@ -108,26 +108,7 @@ export function AdminLogin() {
               </button>
             </form>
 
-            {/* Quick Login Shortcuts */}
-            <div className="mt-5">
-              <p className="text-center text-xs text-[#94A3B8] mb-3">Login Cepat (Demo)</p>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => fillCredentials("operator")}
-                  className="py-2 px-3 rounded-xl border border-[#E2E8F0] text-xs text-[#475569] hover:border-[#0052CC] hover:text-[#0052CC] transition-colors"
-                >
-                  👤 Operator
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillCredentials("superadmin")}
-                  className="py-2 px-3 rounded-xl border border-[#E2E8F0] text-xs text-[#475569] hover:border-[#0052CC] hover:text-[#0052CC] transition-colors"
-                >
-                  🔑 Super Admin
-                </button>
-              </div>
-            </div>
+
 
             {/* Note */}
             <div className="mt-5 p-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl">

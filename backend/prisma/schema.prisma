@@ -8,35 +8,210 @@ datasource db {
 }
 
 enum Role {
-  ADMIN
+  SUPERADMIN
   OPERATOR
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   name      String
   email     String   @unique
   password  String
-
   role      Role     @default(OPERATOR)
+  status    String   @default("Active")
+  lastLogin String?
 
-  posts     Post[]
+  articles  Article[]
+  seminars  Seminar[]
+  schedules Schedule[]
+  galleries Gallery[]
+  guides    Guide[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
-model Post {
-  id          Int      @id @default(autoincrement())
-  title       String
-  slug        String   @unique
-  content     String
-  thumbnail   String?
-  published   Boolean  @default(false)
+model Article {
+  id        String   @id @default(uuid())
+  title     String
+  category  String
+  date      String
+  excerpt   String
+  cover     String
+  content   String
 
-  authorId    Int
-  author      User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("articles")
+}
+
+model Seminar {
+  id             String         @id @default(uuid())
+  title          String
+  category       String
+  mode           String
+  status         String
+  speaker        String
+  speakerRole    String
+  speakerAvatar  String
+  date           String
+  time           String
+  location       String
+  capacity       Int
+  registered     Int
+  description    String
+  requirements   String[]
+  organizer      String
+  organizerLogo  String
+  cover          String
+  daftarType     String
+  daftarUrl      String
+  certificateUrl String
+  authorId       String?
+  author         User?          @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  schedules     Schedule[]
+  participants  Participant[]
+  announcements Announcement[]
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("seminars")
+}
+
+model Material {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  icon        String
+  type        String
+  size        String
+  url         String
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("materials")
+}
+
+model Schedule {
+  id        String   @id @default(uuid())
+  date      String
+  month     String
+  year      String
+  title     String
+  location  String
+  status    String
+
+  seminarId String?
+  seminar   Seminar? @relation(fields: [seminarId], references: [id], onDelete: Cascade)
+
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("schedules")
+}
+
+model Participant {
+  id           String   @id @default(uuid())
+  name         String
+  nip          String
+  agency       String
+  seminarTitle String?
+  date         String
+  status       String
+
+  seminarId    String?
+  seminar      Seminar? @relation(fields: [seminarId], references: [id], onDelete: SetNull)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("participants")
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  type      String
+  content   String?
+  hasFile   Boolean  @default(false)
+  fileUrl   String?
+  date      String
+
+  seminarId String
+  seminar   Seminar  @relation(fields: [seminarId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("announcements")
+}
+
+model Regulation {
+  id        String   @id @default(uuid())
+  group     String
+  title     String
+  url       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("regulations")
+}
+
+model Evaluation {
+  id        String   @id @default(uuid())
+  activity  String
+  category  String
+  period    String
+  score     Float
+  status    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("evaluations")
+}
+
+model Gallery {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  imageUrl    String
+  date        String
+  
+  authorId    String?
+  author      User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("galleries")
+}
+
+model Guide {
+  id        String   @id @default(uuid())
+  title     String
+  key       String   @unique
+  content   String
+  order     Int      @default(0)
+  
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("guides")
 }

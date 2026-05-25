@@ -1,32 +1,46 @@
-import { useState } from "react";
-import InformasiPembuka from "./InformasiPembuka";
-
-const menus = [
-  { title: "Informasi Pembuka", key: "info", content: <InformasiPembuka /> },
-  { title: "Alur Pembangunan", key: "alur", content: <p>Isi alur pembangunan</p> },
-  { title: "Dokumen Persiapan", key: "persiapan", content: <p>Isi dokumen persiapan</p> },
-  { title: "Dokumen Pelaksanaan", key: "pelaksanaan", content: <p>Isi dokumen pelaksanaan</p> },
-  { title: "Repositori & API", key: "repo", content: <p>Isi repositori & API</p> },
-  { title: "Integrasi Layanan", key: "integrasi", content: <p>Isi integrasi layanan</p> },
-  { title: "PSE & Pusat Data", key: "pse", content: <p>Isi PSE & pusat data</p> },
-];
+import { useState, useEffect } from "react";
+import { fetchGuides } from "../data/api";
 
 export default function Panduan() {
-  const [active, setActive] = useState("info");
+  const [guides, setGuides] = useState<any[]>([]);
+  const [active, setActive] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
-  const currentIndex = menus.findIndex((m) => m.key === active);
+  useEffect(() => {
+    fetchGuides()
+      .then(data => {
+        setGuides(data);
+        if (data.length > 0) setActive(data[0].key);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
-  const toggleMenu = (key: string) => {
-    setActive(key);
-  };
+  const currentIndex = guides.findIndex(m => m.key === active);
+  const currentGuide = guides[currentIndex];
+
+  if (loading) {
+    return (
+      <div className="flex max-w-6xl mx-auto p-6 gap-10 min-h-[60vh] items-center justify-center">
+        <p className="text-sm text-gray-500">Memuat panduan...</p>
+      </div>
+    );
+  }
+
+  if (guides.length === 0) {
+    return (
+      <div className="flex max-w-6xl mx-auto p-6 gap-10 min-h-[60vh] items-center justify-center">
+        <p className="text-sm text-gray-500">Belum ada konten panduan yang tersedia.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex max-w-6xl mx-auto p-6 gap-10">
 
       {/* SIDEBAR */}
       <div className="w-64 pt-[88px]">
-
-        {menus.map((menu, index) => {
+        {guides.map((menu, index) => {
           const isActive = menu.key === active;
           const isDone = index < currentIndex;
 
@@ -39,7 +53,7 @@ export default function Panduan() {
               <div className="relative flex flex-col items-center">
 
                 {/* LINE */}
-                {index !== menus.length - 1 && (
+                {index !== guides.length - 1 && (
                   <div className="absolute top-8 w-[2px] h-[68px] bg-gray-300" />
                 )}
 
@@ -57,13 +71,13 @@ export default function Panduan() {
                     }
                   `}
                 >
-                  {index + 1}
+                  {menu.order || index + 1}
                 </div>
               </div>
 
               {/* TITLE */}
               <button
-                onClick={() => toggleMenu(menu.key)}
+                onClick={() => setActive(menu.key)}
                 className={`text-left pt-1 text-sm font-medium transition ${
                   isActive ? "text-[#2563EB]" : "text-gray-500"
                 }`}
@@ -80,12 +94,12 @@ export default function Panduan() {
 
         {/* HEADER */}
         <h1 className="text-2xl font-bold text-[#1E293B] mb-6">
-          {menus[currentIndex].title}
+          {currentGuide?.title}
         </h1>
 
         {/* ACCORDION */}
         <div className="space-y-5">
-          {menus.map((menu) => {
+          {guides.map((menu) => {
             const isOpen = menu.key === active;
 
             return (
@@ -95,7 +109,7 @@ export default function Panduan() {
               >
                 {/* HEADER */}
                 <button
-                  onClick={() => toggleMenu(menu.key)}
+                  onClick={() => setActive(menu.key)}
                   className="w-full flex items-center gap-3 px-6 py-7 text-left hover:bg-gray-50 transition"
                 >
                   {/* ICON */}
@@ -120,7 +134,10 @@ export default function Panduan() {
                 {/* CONTENT */}
                 {isOpen && (
                   <div className="border-t p-6 bg-[#F8FAFC]">
-                    {menu.content}
+                    <div
+                      className="prose prose-sm max-w-none text-[#374151]"
+                      dangerouslySetInnerHTML={{ __html: menu.content }}
+                    />
                   </div>
                 )}
               </div>

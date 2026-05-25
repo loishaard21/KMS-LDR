@@ -21,6 +21,9 @@ import { KelolaJadwal } from "./pages/operator/KelolaJadwal";
 import { KelolaArtikel } from "./pages/operator/KelolaArtikel";
 import { DataPeserta } from "./pages/operator/DataPeserta";
 import { UploadInformasi } from "./pages/operator/UploadInformasi";
+import { ProfilSaya } from "./pages/operator/ProfilSaya";
+import { KelolaGallery } from "./pages/operator/KelolaGallery";
+import { KelolaPanduan } from "./pages/operator/KelolaPanduan";
 
 // Super Admin pages
 import { SuperAdminDashboard } from "./pages/superadmin/SuperAdminDashboard";
@@ -101,8 +104,11 @@ export const router = createBrowserRouter([
       { path: "kelola-materi", Component: KelolaMateri },
       { path: "kelola-jadwal", Component: KelolaJadwal },
       { path: "kelola-artikel", Component: KelolaArtikel },
+      { path: "kelola-gallery", Component: KelolaGallery },
+      { path: "kelola-panduan", Component: KelolaPanduan },
       { path: "data-peserta", Component: DataPeserta },
       { path: "upload-informasi", Component: UploadInformasi },
+      { path: "profil", Component: ProfilSaya },
     ],
   },
 
@@ -137,6 +143,7 @@ export const router = createBrowserRouter([
       },
       { path: "post", Component: PostList },
       { path: "post/create", Component: PostForm },
+      { path: "kelola-panduan", Component: KelolaPanduan },
       {
         path: "post-category",
         element: (
@@ -146,15 +153,7 @@ export const router = createBrowserRouter([
           />
         ),
       },
-      {
-        path: "agenda",
-        element: (
-          <GenericPage
-            title="Agenda"
-            description="Kelola agenda dan kalender kegiatan."
-          />
-        ),
-      },
+      { path: "agenda", Component: KelolaJadwal },
       {
         path: "download",
         element: (
@@ -173,15 +172,7 @@ export const router = createBrowserRouter([
           />
         ),
       },
-      {
-        path: "gallery",
-        element: (
-          <GenericPage
-            title="Gallery"
-            description="Kelola galeri foto kegiatan."
-          />
-        ),
-      },
+      { path: "gallery", Component: KelolaGallery },
       {
         path: "album",
         element: (

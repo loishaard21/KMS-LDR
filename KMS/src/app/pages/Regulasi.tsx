@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import { Download, FileText } from "lucide-react";
-import { regulasiList } from "../data/mockData";
+import { fetchRegulations } from "../data/api";
 
 const groupColors: Record<string, string> = {
   "Peraturan Presiden (Perpres)": "#0052CC",
@@ -9,6 +10,31 @@ const groupColors: Record<string, string> = {
 };
 
 export function Regulasi() {
+  const [regulations, setRegulations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchRegulations()
+      .then(res => {
+        setRegulations(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching regulations:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const grouped = regulations.reduce((acc: any[], item: any) => {
+    const existing = acc.find(g => g.group === item.group);
+    if (existing) {
+      existing.items.push(item);
+    } else {
+      acc.push({ group: item.group, items: [item] });
+    }
+    return acc;
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
@@ -18,7 +44,10 @@ export function Regulasi() {
       </div>
 
       <div className="space-y-8">
-        {regulasiList.map(group => {
+        {loading ? (
+          <p className="text-sm text-[#64748B]">Memuat regulasi...</p>
+        ) : (
+          grouped.map(group => {
           const color = groupColors[group.group] || "#0052CC";
           return (
             <div key={group.group}>
@@ -51,7 +80,8 @@ export function Regulasi() {
               </div>
             </div>
           );
-        })}
+        })
+      )}
       </div>
     </div>
   );

@@ -1,10 +1,34 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { Calendar, MapPin, Users, Clock, ArrowUpRight, Download, CheckCircle, ChevronLeft, Building2, Tag } from "lucide-react";
-import { seminars } from "../data/mockData";
+import { fetchSeminar } from "../data/api";
 
 export function SeminarDetail() {
   const { id } = useParams();
-  const seminar = seminars.find(s => s.id === id);
+  const [seminar, setSeminar] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (id) {
+      fetchSeminar(id)
+        .then(res => {
+          setSeminar(res);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Error fetching seminar detail:", err);
+          setLoading(false);
+        });
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
+        <p className="text-[#64748B]">Memuat detail seminar...</p>
+      </div>
+    );
+  }
 
   if (!seminar) {
     return (

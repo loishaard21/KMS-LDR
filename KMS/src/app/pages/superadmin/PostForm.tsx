@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import {
   Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   List, ListOrdered, Link as LinkIcon, Image as ImageIcon, Table, Smile,
-  ChevronDown, Save, Eye, ArrowLeft, Heading1, Heading2, Strikethrough,
-  Quote, Code, Minus
+  Save, Eye, ArrowLeft, Strikethrough, Quote, Code, Minus
 } from "lucide-react";
+import { createArticle } from "../../data/api";
 
-const categories = ["Form", "Berita", "SOSIALISASI", "Regulasi", "Panduan SPBE"];
+const categories = ["Form", "Berita", "Sosialisasi", "Regulasi", "Panduan SPBE"];
 const daftarTypes = ["Google Form", "Link Eksternal", "Upload File", "Teks/Info", "Nonaktif"];
 const fontSizes = ["12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px"];
 const fontFamilies = ["Poppins", "Arial", "Times New Roman", "Georgia"];
@@ -37,11 +37,14 @@ const toolbarRow2 = [
 
 export function PostForm() {
   const navigate = useNavigate();
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
   const [form, setForm] = useState({
     category: "Berita",
     title: "",
     seoTitle: "",
     content: "",
+    excerpt: "",
     daftarType: "Nonaktif",
     daftarUrl: "",
     certificateUrl: "",
@@ -55,14 +58,30 @@ export function PostForm() {
   const [selectedStyle, setSelectedStyle] = useState("Normal");
 
   const handleChange = (k: string, v: string | boolean) => setForm(f => ({ ...f, [k]: v }));
-
   const toggleFormat = (label: string) =>
     setActiveFormat(f => f.includes(label) ? f.filter(x => x !== label) : [...f, label]);
 
-  const handleSave = () => {
-    alert("Post berhasil disimpan! (Demo)");
-    navigate("/superadmin/post");
+  const handleSave = async () => {
+    if (!form.title.trim()) { setSaveError("Judul artikel wajib diisi."); return; }
+    if (!form.content.trim()) { setSaveError("Konten artikel wajib diisi."); return; }
+    setSaveError("");
+    setSaving(true);
+    try {
+      await createArticle({
+        title: form.title,
+        category: form.category,
+        content: form.content,
+        excerpt: form.excerpt || form.content.substring(0, 150),
+      });
+      navigate("/superadmin/post");
+    } catch (err) {
+      console.error(err);
+      setSaveError("Gagal menyimpan artikel. Silakan coba lagi.");
+    } finally {
+      setSaving(false);
+    }
   };
+
 
   return (
     <div className="space-y-5">

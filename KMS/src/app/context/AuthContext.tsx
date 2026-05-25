@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { apiLogin } from "../data/api";
 
 type Role = "operator" | "superadmin" | null;
 
 interface AuthUser {
+  id: string;
   name: string;
   email: string;
   role: Role;
@@ -12,6 +14,7 @@ interface AuthContextType {
   user: AuthUser | null;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
+  updateUserSession: (data: Partial<AuthUser>) => void;
   isAuthenticated: boolean;
 }
 
@@ -19,13 +22,9 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   login: async () => false,
   logout: () => {},
+  updateUserSession: () => {},
   isAuthenticated: false,
 });
-
-const MOCK_CREDENTIALS = [
-  { email: "operator@lampungprov.go.id", password: "operator123", name: "Rini Agustina, S.Kom.", role: "operator" as Role },
-  { email: "admin@lampungprov.go.id", password: "admin123", name: "Superadmin KMS", role: "superadmin" as Role },
-];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(() => {
@@ -42,10 +41,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    const found = MOCK_CREDENTIALS.find(c => c.email === email && c.password === password);
-    if (found) {
-      setUser({ name: found.name, email: found.email, role: found.role });
-      return true;
+    try {
+      const res = await apiLogin({ email, password });
+      if (res && res.user) {
+        setUser({
+          id: res.user.id,
+          name: res.user.name,
+          email: res.user.email,
+          role: res.user.role as Role,
+        });
+        return true;
+      }
+    } catch (err) {
+      console.error("Login error:", err);
     }
     return false;
   };
@@ -54,8 +62,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+  const updateUserSession = (data: Partial<AuthUser>) => {
+    setUser((prev) => {
+      if (!prev) return null;
+      return { ...prev, ...data };
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, updateUserSession, isAuthenticated: !!user }}
+    >
       {children}
     </AuthContext.Provider>
   );

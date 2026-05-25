@@ -1,15 +1,29 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router";
 import { ChevronRight, Search } from "lucide-react";
-import { articles } from "../data/mockData";
+import { fetchArticles } from "../data/api";
 
 const categories = ["Semua", "Berita", "Sosialisasi", "Regulasi", "Panduan SPBE"];
 
 export function Artikel() {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [search, setSearch] = useState("");
+  const [articleList, setArticleList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = articles.filter(a => {
+  useEffect(() => {
+    fetchArticles()
+      .then(res => {
+        setArticleList(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching articles:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const filtered = articleList.filter(a => {
     const matchCat = activeCategory === "Semua" || a.category === activeCategory;
     const matchSearch = a.title.toLowerCase().includes(search.toLowerCase()) || a.excerpt.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
@@ -53,7 +67,9 @@ export function Artikel() {
       </div>
 
       {/* Grid */}
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="text-center py-16 text-[#94A3B8]">Memuat artikel...</div>
+      ) : filtered.length === 0 ? (
         <div className="text-center py-16 text-[#94A3B8]">Tidak ada artikel yang ditemukan.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -82,7 +98,40 @@ export function Artikel() {
 }
 
 export function ArtikelDetail() {
-  const article = articles[0]; // default fallback
+  const { id } = useParams();
+  const [article, setArticle] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchArticles()
+      .then(res => {
+        const found = res.find((a: any) => a.id === id);
+        setArticle(found);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching article detail:", err);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+        <p className="text-[#64748B]">Memuat artikel...</p>
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+        <p className="text-[#64748B]">Artikel tidak ditemukan.</p>
+        <Link to="/artikel" className="text-[#0052CC] hover:underline mt-2 inline-block">← Kembali ke Artikel</Link>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
       <Link to="/artikel" className="text-sm text-[#0052CC] hover:underline mb-6 inline-block">← Kembali ke Artikel</Link>

@@ -1,6 +1,8 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
-import { BookOpen, Users, Award, TrendingUp, Eye, Edit, Trash2, FileText, Image, Download } from "lucide-react";
-import { seminars, articles } from "../../data/mockData";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BookOpen, Users, Award, TrendingUp, Eye, Edit, Trash2, FileText } from "lucide-react";
+import { fetchSeminars, fetchArticles, fetchParticipants, deleteSeminar } from "../../data/api";
 
 const monthlyData = [
   { month: "Okt", peserta: 42, seminar: 3 },
@@ -11,22 +13,58 @@ const monthlyData = [
   { month: "Mar", peserta: 156, seminar: 7 },
 ];
 
-const categoryData = [
-  { name: "SPBE", value: 35, color: "#0052CC" },
-  { name: "Transformasi Digital", value: 25, color: "#00B4D8" },
-  { name: "Kearsipan", value: 20, color: "#7C3AED" },
-  { name: "Pelayanan Publik", value: 15, color: "#22C55E" },
-  { name: "Pengadaan", value: 5, color: "#F59E0B" },
-];
-
-const systemStats = [
-  { label: "Total Seminar", value: "48", sub: "+3 bulan ini", icon: BookOpen, color: "#0052CC", bg: "#EEF4FF" },
-  { label: "Total Peserta", value: "1.247", sub: "+89 bulan ini", icon: Users, color: "#00B4D8", bg: "#E0F7FA" },
-  { label: "Sertifikat Diterbitkan", value: "3.892", sub: "+124 bulan ini", icon: Award, color: "#22C55E", bg: "#F0FFF4" },
-  { label: "Total Artikel", value: "87", sub: "+5 bulan ini", icon: FileText, color: "#7C3AED", bg: "#F5F3FF" },
-];
-
 export function SuperAdminDashboard() {
+  const navigate = useNavigate();
+  const [seminarList, setSeminarList] = useState<any[]>([]);
+  const [articleList, setArticleList] = useState<any[]>([]);
+  const [participantsCount, setParticipantsCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const loadData = () => {
+    Promise.all([fetchSeminars(), fetchArticles(), fetchParticipants()])
+      .then(([sems, arts, parts]) => {
+        setSeminarList(sems);
+        setArticleList(arts);
+        setParticipantsCount(parts.length);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  };
+
+  const handleDeleteSeminar = async (id: string) => {
+    if (confirm("Hapus seminar ini?")) {
+      try { await deleteSeminar(id); loadData(); }
+      catch { alert("Gagal menghapus seminar."); }
+    }
+  };
+
+  const totalCertificates = seminarList.filter(s => s.certificateUrl && s.certificateUrl !== "").length;
+
+  useEffect(() => { loadData(); }, []);
+
+  const categoryCounts: Record<string, number> = {};
+  seminarList.forEach(s => {
+    categoryCounts[s.category] = (categoryCounts[s.category] || 0) + 1;
+  });
+
+  const totalCategories = Object.values(categoryCounts).reduce((a, b) => a + b, 0) || 1;
+  const colors = ["#0052CC", "#00B4D8", "#7C3AED", "#22C55E", "#F59E0B"];
+  const categoryData = Object.keys(categoryCounts).map((name, idx) => ({
+    name,
+    value: Math.round(((categoryCounts[name] || 0) / totalCategories) * 100),
+    color: colors[idx % colors.length],
+  }));
+
+  const systemStats = [
+    { label: "Total Seminar", value: loading ? "..." : seminarList.length.toString(), sub: "+3 bulan ini", icon: BookOpen, color: "#0052CC", bg: "#EEF4FF" },
+    { label: "Total Peserta", value: loading ? "..." : participantsCount.toString(), sub: "+89 bulan ini", icon: Users, color: "#00B4D8", bg: "#E0F7FA" },
+    { label: "Sertifikat Diterbitkan", value: loading ? "..." : totalCertificates.toString(), sub: "+12 bulan ini", icon: Award, color: "#22C55E", bg: "#F0FFF4" },
+    { label: "Total Artikel", value: loading ? "..." : articleList.length.toString(), sub: "+5 bulan ini", icon: FileText, color: "#7C3AED", bg: "#F5F3FF" },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Stats */}
@@ -77,10 +115,10 @@ export function SuperAdminDashboard() {
           <h3 className="font-semibold text-[#1A2332] text-sm mb-4">Distribusi Kategori</h3>
           <ResponsiveContainer width="100%" height={120}>
             <PieChart>
-              <Pie data={categoryData} cx="50%" cy="50%" outerRadius={50} dataKey="value">
-                {categoryData.map((entry, index) => (
+              <Pie data={categoryData.length ? categoryData : [{ name: "Belum Ada", value: 100 }]} cx="50%" cy="50%" outerRadius={50} dataKey="value">
+                {categoryData.length ? categoryData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
+                )) : <Cell fill="#94A3B8" />}
               </Pie>
               <Tooltip contentStyle={{ borderRadius: 12, border: "none", fontSize: 11 }} />
             </PieChart>
@@ -118,7 +156,11 @@ export function SuperAdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {seminars.slice(0, 5).map(s => (
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-4 text-xs text-[#94A3B8]">Memuat konten...</td>
+                </tr>
+              ) : seminarList.slice(0, 5).map(s => (
                 <tr key={s.id} className="border-t border-[#F1F5F9] hover:bg-[#FAFBFC]">
                   <td className="px-4 py-3">
                     <span className="text-xs bg-[#EEF4FF] text-[#0052CC] px-2 py-0.5 rounded-full">{s.category}</span>
@@ -131,13 +173,13 @@ export function SuperAdminDashboard() {
                       {s.status === "Pendaftaran Dibuka" ? "Aktif" : "Penuh"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-[#64748B]">Rini Agustina</td>
-                  <td className="px-4 py-3 text-xs text-[#64748B]">Mar 2025</td>
+                  <td className="px-4 py-3 text-xs text-[#64748B]">{s.author?.name || "Superadmin"}</td>
+                  <td className="px-4 py-3 text-xs text-[#64748B]">{s.date}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1.5">
-                      <button className="p-1.5 rounded-lg hover:bg-[#EEF4FF] text-[#0052CC]"><Eye size={13} /></button>
-                      <button className="p-1.5 rounded-lg hover:bg-yellow-50 text-yellow-600"><Edit size={13} /></button>
-                      <button className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 size={13} /></button>
+                      <button onClick={() => navigate(`/seminar/${s.id}`)} title="Lihat" className="p-1.5 rounded-lg hover:bg-[#EEF4FF] text-[#0052CC]"><Eye size={13} /></button>
+                      <button onClick={() => navigate("/superadmin/post")} title="Edit" className="p-1.5 rounded-lg hover:bg-yellow-50 text-yellow-600"><Edit size={13} /></button>
+                      <button onClick={() => handleDeleteSeminar(s.id)} title="Hapus" className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 size={13} /></button>
                     </div>
                   </td>
                 </tr>
