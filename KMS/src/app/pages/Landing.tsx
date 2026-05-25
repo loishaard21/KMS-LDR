@@ -296,7 +296,7 @@ export function Landing() {
           {loading ? (
             <p className="text-xs text-[#64748B]">Memuat artikel...</p>
           ) : (
-            articleList.map(article => (
+            articleList.slice(0, 3).map(article => (
               <div key={article.id} className="bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] hover:shadow-md transition-shadow" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.05)" }}>
                 <div className="relative h-44 overflow-hidden">
                   <img src={article.cover} alt={article.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />

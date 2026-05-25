@@ -130,6 +130,9 @@ export async function fetchRegulations() {
 export async function createRegulation(data: any) {
   return request("regulations", "POST", data);
 }
+export async function updateRegulation(id: string, data: any) {
+  return request(`regulations/${id}`, "PUT", data);
+}
 export async function deleteRegulation(id: string) {
   return request(`regulations/${id}`, "DELETE");
 }
@@ -140,6 +143,9 @@ export async function fetchEvaluations() {
 }
 export async function createEvaluation(data: any) {
   return request("evaluations", "POST", data);
+}
+export async function updateEvaluation(id: string, data: any) {
+  return request(`evaluations/${id}`, "PUT", data);
 }
 export async function deleteEvaluation(id: string) {
   return request(`evaluations/${id}`, "DELETE");

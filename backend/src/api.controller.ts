@@ -418,6 +418,18 @@ export class ApiController {
     });
   }
 
+  @Put('regulations/:id')
+  async updateRegulation(@Param('id') id: string, @Body() body: any) {
+    return this.prisma.regulation.update({
+      where: { id },
+      data: {
+        group: body.group,
+        title: body.title,
+        url: body.url,
+      },
+    });
+  }
+
   @Delete('regulations/:id')
   async deleteRegulation(@Param('id') id: string) {
     return this.prisma.regulation.delete({
@@ -442,6 +454,20 @@ export class ApiController {
         period: body.period,
         score: Number(body.score || 0),
         status: body.status || 'Dalam Proses',
+      },
+    });
+  }
+
+  @Put('evaluations/:id')
+  async updateEvaluation(@Param('id') id: string, @Body() body: any) {
+    return this.prisma.evaluation.update({
+      where: { id },
+      data: {
+        activity: body.activity,
+        category: body.category,
+        period: body.period,
+        score: body.score !== undefined ? Number(body.score) : undefined,
+        status: body.status,
       },
     });
   }

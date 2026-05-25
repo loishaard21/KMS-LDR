@@ -24,6 +24,7 @@ import { UploadInformasi } from "./pages/operator/UploadInformasi";
 import { ProfilSaya } from "./pages/operator/ProfilSaya";
 import { KelolaGallery } from "./pages/operator/KelolaGallery";
 import { KelolaPanduan } from "./pages/operator/KelolaPanduan";
+import { KelolaEvaluasi } from "./pages/operator/KelolaEvaluasi";
 
 // Super Admin pages
 import { SuperAdminDashboard } from "./pages/superadmin/SuperAdminDashboard";
@@ -32,6 +33,7 @@ import { PostForm } from "./pages/superadmin/PostForm";
 import { AkunOperator } from "./pages/superadmin/AkunOperator";
 import { Pengaturan } from "./pages/superadmin/Pengaturan";
 import { GenericPage } from "./pages/superadmin/GenericPage";
+import { KelolaRegulasi } from "./pages/superadmin/KelolaRegulasi";
 
 // Auth
 import { useAuth } from "./context/AuthContext";
@@ -106,6 +108,7 @@ export const router = createBrowserRouter([
       { path: "kelola-artikel", Component: KelolaArtikel },
       { path: "kelola-gallery", Component: KelolaGallery },
       { path: "kelola-panduan", Component: KelolaPanduan },
+      { path: "kelola-evaluasi", Component: KelolaEvaluasi },
       { path: "data-peserta", Component: DataPeserta },
       { path: "upload-informasi", Component: UploadInformasi },
       { path: "profil", Component: ProfilSaya },
@@ -210,6 +213,7 @@ export const router = createBrowserRouter([
         ),
       },
       { path: "akun-operator", Component: AkunOperator },
+      { path: "kelola-regulasi", Component: KelolaRegulasi },
       { path: "pengaturan", Component: Pengaturan },
     ],
   },

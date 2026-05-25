@@ -20,6 +20,7 @@ function ArticleFormModal({
     category: article?.category || "Berita",
     content: article?.content || "",
     excerpt: article?.excerpt || "",
+    cover: article?.cover || "https://images.unsplash.com/photo-1613441589134-3fc7f95a3e16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600",
     active: true,
   });
   const [activeFormat, setActiveFormat] = useState<string[]>([]);
@@ -52,11 +53,15 @@ function ArticleFormModal({
             <textarea value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} rows={2} placeholder="Ringkasan singkat..." className="w-full px-4 py-2.5 text-sm border border-[#E2E8F0] rounded-xl bg-white outline-none focus:border-[#0052CC] resize-none" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#374151] mb-1.5">Foto Cover</label>
-            <div className="border-2 border-dashed border-[#E2E8F0] rounded-xl p-4 text-center cursor-pointer hover:border-[#0052CC]/50">
-              <Image size={20} className="mx-auto text-[#94A3B8] mb-1" />
-              <p className="text-xs text-[#94A3B8]">Klik atau drag foto cover di sini (JPG/PNG)</p>
-            </div>
+            <label className="block text-sm font-medium text-[#374151] mb-1.5">URL / Link Cover Image <span className="text-red-500">*</span></label>
+            <input
+              required
+              type="text"
+              value={form.cover}
+              onChange={e => setForm(f => ({ ...f, cover: e.target.value }))}
+              placeholder="https://images.unsplash.com/photo-..."
+              className="w-full px-4 py-2.5 text-sm border border-[#E2E8F0] rounded-xl bg-white outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-[#0052CC]/20"
+            />
           </div>
 
           {/* WYSIWYG Editor */}
@@ -126,12 +131,7 @@ export function KelolaArtikel() {
     setLoading(true);
     fetchArticles()
       .then(res => {
-        // Filter by authorId if the logged-in user is an operator
-        if (user && user.role === "operator") {
-          setArticles(res.filter((art: any) => art.authorId === user.id));
-        } else {
-          setArticles(res);
-        }
+        setArticles(res);
         setLoading(false);
       })
       .catch(err => { console.error(err); setLoading(false); });
@@ -148,6 +148,7 @@ export function KelolaArtikel() {
         title: formData.title,
         category: formData.category,
         excerpt: formData.excerpt || formData.content?.substring(0, 150),
+        cover: formData.cover,
         content: formData.content,
         authorId: user?.id,
       };
