@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
-import { Search, Calendar, MapPin, Users, ChevronRight, Download, ArrowUpRight, Award, BookOpen, FileText, BarChart3, CheckCircle } from "lucide-react";
+import { Search, Calendar, MapPin, Users, ChevronRight, Download, ArrowUpRight, Award, BookOpen, FileText, BarChart3, CheckCircle, HelpCircle } from "lucide-react";
 import { fetchSeminars, fetchArticles, fetchMaterials } from "../data/api";
 
 function ModeBadge({ mode }: { mode: string }) {
@@ -227,7 +227,7 @@ export function Landing() {
             <p className="text-[#0052CC] text-sm font-medium mb-1">Layanan Kami</p>
             <h2 className="text-2xl font-bold text-[#1A2332]">Fitur Unggulan Platform</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
               {
                 icon: Calendar,
@@ -256,6 +256,13 @@ export function Landing() {
                 desc: "Pantau hasil evaluasi kegiatan dan indikator kinerja pengetahuan organisasi Pemprov Lampung.",
                 color: "#22C55E",
                 to: "/evaluasi",
+              },
+              {
+                icon: HelpCircle,
+                title: "Panduan",
+                desc: "Pelajari cara menggunakan portal KMS, mengelola seminar, mengakses materi, dan fitur lainnya.",
+                color: "#F59E0B",
+                to: "/panduan",
               },
             ].map(f => {
               const Icon = f.icon;

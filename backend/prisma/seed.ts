@@ -83,15 +83,6 @@ async function main() {
       cover: 'https://images.unsplash.com/photo-1637308755606-266e7f2371d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600',
       content: 'Aplikasi Satu Data Lampung kini resmi diluncurkan...',
     },
-    {
-      id: '3',
-      title: 'Panduan Penggunaan Portal KMS untuk ASN Provinsi Lampung',
-      category: 'Panduan SPBE',
-      date: '10 Maret 2025',
-      excerpt: 'Dinas Kominfo menerbitkan panduan lengkap penggunaan Portal Knowledge Management System (KMS) yang dapat diakses seluruh ASN di lingkungan Pemerintah Provinsi Lampung.',
-      cover: 'https://images.unsplash.com/photo-1762330916242-08b27b39e265?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600',
-      content: 'Panduan penggunaan portal KMS Pemprov Lampung...',
-    },
   ];
 
   for (const a of articlesData) {
@@ -468,6 +459,118 @@ async function main() {
     }
   }
   console.log(`Created ${announcementsData.length} announcements.`);
+
+  // 10. Seed Guides (Panduan)
+  const guidesData = [
+    {
+      title: 'Pengenalan Portal KMS',
+      key: 'pengenalan-portal-kms',
+      order: 1,
+      content: `<h3>Apa itu Portal KMS?</h3>
+<p>Knowledge Management System (KMS) Pemerintah Provinsi Lampung adalah platform digital terpadu yang dirancang untuk mengelola, menyimpan, dan berbagi pengetahuan di lingkungan ASN Pemprov Lampung.</p>
+<h3>Tujuan Portal KMS</h3>
+<ul>
+  <li><strong>Sentralisasi Pengetahuan</strong> — Mengumpulkan seluruh informasi, regulasi, dan materi pelatihan dalam satu platform terintegrasi.</li>
+  <li><strong>Peningkatan Kompetensi ASN</strong> — Memfasilitasi pembelajaran dan pengembangan kapasitas aparatur melalui seminar, bimtek, dan materi digital.</li>
+  <li><strong>Transparansi Informasi</strong> — Menyediakan akses publik terhadap informasi kegiatan pemerintah provinsi terkait transformasi digital.</li>
+  <li><strong>Mendukung SPBE</strong> — Menjadi bagian dari implementasi Sistem Pemerintahan Berbasis Elektronik sesuai Perpres No. 95 Tahun 2018.</li>
+</ul>
+<h3>Fitur Utama</h3>
+<p>Portal KMS menyediakan beberapa fitur unggulan, antara lain: Manajemen Seminar & Pelatihan, Pusat Materi & Dokumen, Artikel & Berita, Regulasi SPBE, Jadwal Kegiatan, dan Evaluasi Kinerja.</p>`,
+    },
+    {
+      title: 'Cara Mengakses Portal',
+      key: 'cara-mengakses-portal',
+      order: 2,
+      content: `<h3>Akses Publik (Tanpa Login)</h3>
+<p>Seluruh halaman informasi pada portal KMS dapat diakses secara bebas oleh masyarakat umum dan ASN tanpa perlu login. Anda dapat:</p>
+<ul>
+  <li>Melihat daftar seminar dan pelatihan yang tersedia.</li>
+  <li>Membaca artikel dan berita terkini.</li>
+  <li>Mengunduh materi dan dokumen yang dipublikasikan.</li>
+  <li>Melihat jadwal kegiatan dan regulasi SPBE.</li>
+</ul>
+<h3>Akses Operator (Dengan Login)</h3>
+<p>Bagi operator dan superadmin yang ditugaskan untuk mengelola konten, akses login tersedia melalui halaman <code>/login</code>. Langkah-langkahnya:</p>
+<ol>
+  <li>Klik menu <strong>"Login"</strong> pada navbar di bagian kanan atas.</li>
+  <li>Masukkan <strong>email</strong> dan <strong>password</strong> yang telah didaftarkan oleh superadmin.</li>
+  <li>Setelah berhasil login, Anda akan diarahkan ke dashboard sesuai peran (Operator / Superadmin).</li>
+</ol>
+<h3>Persyaratan Teknis</h3>
+<p>Pastikan Anda menggunakan browser modern (Chrome, Firefox, Edge, atau Safari versi terbaru) untuk pengalaman terbaik.</p>`,
+    },
+    {
+      title: 'Mengelola Seminar & Pelatihan',
+      key: 'mengelola-seminar',
+      order: 3,
+      content: `<h3>Melihat Daftar Seminar</h3>
+<p>Halaman <strong>Seminar</strong> menampilkan seluruh seminar dan pelatihan yang tersedia. Setiap kartu seminar menampilkan informasi penting seperti:</p>
+<ul>
+  <li><strong>Mode pelaksanaan</strong> — Online, Offline, atau Hybrid.</li>
+  <li><strong>Status pendaftaran</strong> — Apakah masih terbuka atau kuota sudah penuh.</li>
+  <li><strong>Kapasitas & jumlah peserta terdaftar</strong> — Ditampilkan dalam progress bar visual.</li>
+  <li><strong>Narasumber</strong> — Nama dan jabatan pembicara.</li>
+</ul>
+<h3>Mendaftar Seminar</h3>
+<p>Untuk mendaftar seminar, klik tombol <strong>"Daftar"</strong> pada kartu seminar. Anda akan diarahkan ke formulir pendaftaran eksternal (Google Form atau link registrasi lainnya) sesuai yang ditentukan penyelenggara.</p>
+<h3>Bagi Operator: Mengelola Data Seminar</h3>
+<p>Operator dapat menambah, mengedit, dan menghapus seminar melalui dashboard <strong>Kelola Seminar</strong>. Pastikan untuk mengisi seluruh informasi yang diperlukan termasuk cover, deskripsi, dan persyaratan peserta.</p>`,
+    },
+    {
+      title: 'Mengakses Materi & Dokumen',
+      key: 'mengakses-materi',
+      order: 4,
+      content: `<h3>Pusat Materi</h3>
+<p>Halaman <strong>Materi</strong> menyediakan berbagai dokumen yang dapat diunduh secara gratis, meliputi:</p>
+<ul>
+  <li><strong>Modul pelatihan</strong> — Materi lengkap tentang SPBE, tata kelola TI, dan transformasi digital.</li>
+  <li><strong>Template SOP</strong> — Standar prosedur operasional untuk pelayanan publik berbasis digital.</li>
+  <li><strong>Buku saku</strong> — Referensi praktis untuk kompetensi digital ASN.</li>
+  <li><strong>Panduan keamanan informasi</strong> — Standar proteksi data di lingkungan instansi pemerintah.</li>
+</ul>
+<h3>Cara Mengunduh</h3>
+<p>Klik tombol <strong>"Unduh"</strong> pada kartu materi yang diinginkan. File akan langsung terunduh atau terbuka di tab baru tergantung jenis dokumen (PDF, DOCX, dll).</p>
+<h3>Bagi Operator: Upload Materi Baru</h3>
+<p>Operator dapat mengunggah materi baru melalui menu <strong>Kelola Materi</strong> di dashboard. Isi judul, deskripsi, tipe file, ukuran file, dan URL link unduhan.</p>`,
+    },
+    {
+      title: 'Evaluasi & Pelaporan',
+      key: 'evaluasi-pelaporan',
+      order: 5,
+      content: `<h3>Dashboard Evaluasi</h3>
+<p>Halaman <strong>Evaluasi</strong> menampilkan ringkasan hasil evaluasi kegiatan yang telah dilaksanakan, meliputi:</p>
+<ul>
+  <li><strong>Nama kegiatan</strong> dan kategori pelaksanaan.</li>
+  <li><strong>Periode</strong> pelaksanaan (per kuartal).</li>
+  <li><strong>Skor evaluasi</strong> dari setiap kegiatan.</li>
+  <li><strong>Status</strong> — Selesai atau Dalam Proses.</li>
+</ul>
+<h3>Indikator Kinerja</h3>
+<p>Evaluasi menggunakan skala skor 0–100 dengan kategori:</p>
+<ul>
+  <li><strong>90–100:</strong> Sangat Baik</li>
+  <li><strong>80–89:</strong> Baik</li>
+  <li><strong>70–79:</strong> Cukup</li>
+  <li><strong>Di bawah 70:</strong> Perlu Perbaikan</li>
+</ul>
+<h3>Bagi Operator: Input Data Evaluasi</h3>
+<p>Operator dapat menambah dan memperbarui data evaluasi melalui menu <strong>Kelola Evaluasi</strong> di dashboard. Pastikan data skor dan status diperbarui secara berkala setelah setiap kegiatan selesai dilaksanakan.</p>`,
+    },
+  ];
+
+  for (const g of guidesData) {
+    await prisma.guide.create({
+      data: {
+        title: g.title,
+        key: g.key,
+        content: g.content,
+        order: g.order,
+        authorId: dbUsers.find(u => u.role === Role.SUPERADMIN)?.id,
+      },
+    });
+  }
+  console.log(`Created ${guidesData.length} guides.`);
 
   console.log('Seeding finished successfully.');
 }

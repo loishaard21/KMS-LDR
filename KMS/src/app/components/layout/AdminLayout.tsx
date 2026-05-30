@@ -22,7 +22,7 @@ const operatorMenuItems: MenuItem[] = [
   { label: "Kelola Jadwal", icon: Calendar, path: "/operator/kelola-jadwal" },
   { label: "Kelola Artikel", icon: Newspaper, path: "/operator/kelola-artikel" },
   { label: "Kelola Gallery", icon: Image, path: "/operator/kelola-gallery" },
-  { label: "Kelola Panduan", icon: BookOpen, path: "/operator/kelola-panduan" },
+  { label: "Kelola Regulasi", icon: FileText, path: "/operator/kelola-regulasi" },
   { label: "Kelola Evaluasi", icon: BarChart3, path: "/operator/kelola-evaluasi" },
   { label: "Data Peserta", icon: Users, path: "/operator/data-peserta" },
   { label: "Upload Informasi", icon: Upload, path: "/operator/upload-informasi" },

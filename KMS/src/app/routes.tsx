@@ -107,7 +107,7 @@ export const router = createBrowserRouter([
       { path: "kelola-jadwal", Component: KelolaJadwal },
       { path: "kelola-artikel", Component: KelolaArtikel },
       { path: "kelola-gallery", Component: KelolaGallery },
-      { path: "kelola-panduan", Component: KelolaPanduan },
+      { path: "kelola-regulasi", Component: KelolaRegulasi },
       { path: "kelola-evaluasi", Component: KelolaEvaluasi },
       { path: "data-peserta", Component: DataPeserta },
       { path: "upload-informasi", Component: UploadInformasi },
