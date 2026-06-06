@@ -141,64 +141,122 @@ export function Landing() {
   return (
     <div>
       {/* Hero */}
-      <section style={{ background: "linear-gradient(135deg, #0052CC 0%, #00B4D8 100%)" }} className="relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-10 w-96 h-96 bg-white rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur text-white text-xs px-4 py-1.5 rounded-full mb-5">
-              <div className="w-1.5 h-1.5 bg-[#22C55E] rounded-full animate-pulse" />
-              Portal Resmi Pemerintah Provinsi Lampung
-            </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-              Knowledge Management System
-              <br />
-              <span className="text-[#A5D8FF]">Pemprov Lampung</span>
-            </h1>
-            <p className="text-white/80 text-base mb-8 leading-relaxed">
-              Platform terpadu manajemen pengetahuan, seminar, dan pelatihan ASN Pemerintah Provinsi Lampung untuk mendorong transformasi digital dan peningkatan kompetensi.
-            </p>
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
 
-            {/* Search */}
-            <form onSubmit={handleSearch} className="max-w-xl mx-auto">
-              <div className="flex items-center bg-white rounded-2xl p-1.5 shadow-lg">
-                <Search size={18} className="ml-3 text-[#94A3B8] flex-shrink-0" />
-                <input
-                  type="text"
-                  placeholder="Cari seminar, materi, artikel..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="flex-1 px-3 py-2 text-sm text-[#1A2332] outline-none bg-transparent placeholder-[#94A3B8]"
-                />
-                <button type="submit" className="bg-[#0052CC] text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-[#003D99] transition-colors">
-                  Cari
-                </button>
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-center bg-cover"
+    style={{
+      backgroundImage: "url('/lampung1.png')",
+    }}
+  />
+
+  {/* Overlay Biru Transparan */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background:
+        "linear-gradient(135deg, rgba(0,82,204,0.75) 0%, rgba(0,180,216,0.65) 100%)",
+    }}
+  />
+
+  {/* Blur Effect */}
+  <div className="absolute inset-0">
+    <div className="absolute top-10 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
+    <div className="absolute bottom-0 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+  </div>
+
+  {/* Content */}
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
+
+    <div className="text-center max-w-3xl mx-auto">
+
+      <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur text-white text-xs px-4 py-1.5 rounded-full mb-5">
+        <div className="w-1.5 h-1.5 bg-[#22C55E] rounded-full animate-pulse" />
+        Portal Resmi Pemerintah Provinsi Lampung
+      </div>
+
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+        Knowledge Management System
+        <br />
+        <span className="text-[#D6EFFF]">
+          Pemprov Lampung
+        </span>
+      </h1>
+
+      <p className="text-white/90 text-base mb-8 leading-relaxed">
+        Platform terpadu manajemen pengetahuan, seminar,
+        dan pelatihan ASN Pemerintah Provinsi Lampung
+        untuk mendorong transformasi digital dan
+        peningkatan kompetensi.
+      </p>
+
+      {/* Search */}
+      <form onSubmit={handleSearch} className="max-w-xl mx-auto">
+        <div className="flex items-center bg-white rounded-2xl p-1.5 shadow-lg">
+
+          <Search
+            size={18}
+            className="ml-3 text-[#94A3B8] flex-shrink-0"
+          />
+
+          <input
+            type="text"
+            placeholder="Cari seminar, materi, artikel..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 px-3 py-2 text-sm text-[#1A2332] outline-none bg-transparent"
+          />
+
+          <button
+            type="submit"
+            className="bg-[#0052CC] text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-[#003D99] transition-colors"
+          >
+            Cari
+          </button>
+
+        </div>
+      </form>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10">
+
+        {[
+          { label: "Total Seminar", value: "48", icon: BookOpen },
+          { label: "Peserta Aktif", value: "1.247", icon: Users },
+          { label: "Sertifikat", value: "3.892", icon: Award },
+          { label: "Materi Tersedia", value: "124", icon: FileText },
+        ].map((stat) => {
+          const Icon = stat.icon;
+
+          return (
+            <div
+              key={stat.label}
+              className="bg-white/15 backdrop-blur border border-white/20 rounded-2xl p-4 text-center"
+            >
+              <Icon
+                size={20}
+                className="mx-auto text-white/80 mb-1.5"
+              />
+
+              <div className="text-2xl font-bold text-white">
+                {stat.value}
               </div>
-            </form>
 
-            {/* Stats Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10">
-              {[
-                { label: "Total Seminar", value: "48", icon: BookOpen },
-                { label: "Peserta Aktif", value: "1.247", icon: Users },
-                { label: "Sertifikat Diterbitkan", value: "3.892", icon: Award },
-                { label: "Materi Tersedia", value: "124", icon: FileText },
-              ].map((stat) => {
-                const Icon = stat.icon;
-                return (
-                  <div key={stat.label} className="bg-white/15 backdrop-blur border border-white/20 rounded-2xl p-4 text-center">
-                    <Icon size={20} className="mx-auto text-white/80 mb-1.5" />
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-white/70 text-xs mt-0.5">{stat.label}</div>
-                  </div>
-                );
-              })}
+              <div className="text-white/70 text-xs mt-0.5">
+                {stat.label}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          );
+        })}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* Seminar Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
