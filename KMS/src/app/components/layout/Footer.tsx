@@ -27,7 +27,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2 text-[#94A3B8] text-sm">
                 <Phone size={14} className="text-[#00B4D8]" />
-                <span>(0721) 487 046</span>
+                <span>(0721) 475270</span>
               </div>
               <div className="flex items-center gap-2 text-[#94A3B8] text-sm">
                 <Mail size={14} className="text-[#00B4D8]" />
@@ -63,9 +63,6 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 "lampungprov.go.id",
-                "kominfo.lampungprov.go.id",
-                "bpsdmd.lampungprov.go.id",
-                "lpse.lampungprov.go.id",
               ].map(link => (
                 <li key={link}>
                   <a href={`https://${link}`} target="_blank" rel="noreferrer" className="text-[#94A3B8] hover:text-[#00B4D8] text-sm transition-colors flex items-center gap-1">
@@ -82,7 +79,7 @@ export function Footer() {
       <div className="border-t border-[#2D3748]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-2">
           <p className="text-[#64748B] text-xs">
-            © 2025 Dinas Komunikasi dan Informatika Provinsi Lampung. Hak Cipta Dilindungi.
+            © 2025 Dinas Komunikasi dan Informatika Provinsi Lampung. LOISHA DIVA .
           </p>
         </div>
       </div>

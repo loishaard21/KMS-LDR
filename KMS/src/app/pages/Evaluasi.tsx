@@ -7,7 +7,7 @@ function EvaluasiDetailModal({ item, onClose }: { item: any; onClose: () => void
     item.score >= 85 ? "#22C55E" : item.score >= 70 ? "#F59E0B" : "#EF4444";
   const scoreLabel =
     item.score >= 85 ? "Sangat Baik" : item.score >= 70 ? "Cukup Baik" : item.score > 0 ? "Perlu Perhatian" : "Belum Ada Skor";
-
+    
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl">

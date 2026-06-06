@@ -31,8 +31,6 @@ const operatorMenuItems: MenuItem[] = [
 
 const superAdminMenuItems: MenuItem[] = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/superadmin/dashboard" },
-  { label: "Indikator Pengetahuan", icon: BarChart3, path: "/superadmin/indikator" },
-  { label: "Pages", icon: Layers, path: "/superadmin/pages" },
   {
     label: "Post",
     icon: FileText,
@@ -42,17 +40,11 @@ const superAdminMenuItems: MenuItem[] = [
       { label: "Add Posts", path: "/superadmin/post/create" },
     ],
   },
-  { label: "Post Category", icon: Tag, path: "/superadmin/post-category" },
   { label: "Kelola Panduan", icon: BookOpen, path: "/superadmin/kelola-panduan" },
   { label: "Kelola Regulasi", icon: FileText, path: "/superadmin/kelola-regulasi" },
   { label: "Agenda", icon: Calendar, path: "/superadmin/agenda" },
   { label: "Download", icon: Download, path: "/superadmin/download" },
-  { label: "Download Category", icon: BookMarked, path: "/superadmin/download-category" },
-  { label: "Gallery", icon: Image, path: "/superadmin/gallery" },
-  { label: "Album", icon: Image, path: "/superadmin/album" },
-  { label: "Video", icon: Video, path: "/superadmin/video" },
   { label: "Contact", icon: MessageSquare, path: "/superadmin/contact" },
-  { label: "Menu", icon: MonitorCheck, path: "/superadmin/menu" },
   { label: "Akun Operator", icon: User, path: "/superadmin/akun-operator" },
   { label: "Pengaturan", icon: Settings, path: "/superadmin/pengaturan" },
 ];

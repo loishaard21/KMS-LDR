@@ -31,18 +31,25 @@ export function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#0052CC] flex items-center justify-center">
-              <span className="text-white text-xs font-bold">KMS</span>
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-[#0052CC] font-semibold text-sm leading-tight">
-                KMS Pemprov
-              </div>
-              <div className="text-[#64748B] text-xs leading-tight">
-                Lampung
-              </div>
-            </div>
-          </Link>
+
+          <div className="w-10 h-10 flex items-center justify-center">
+          <img
+            src= "./logo-lampung.png"
+            alt="Logo Provinsi Lampung"
+            className="w-full h-full object-contain"
+          />
+          </div>
+
+        <div className="hidden sm:block">
+          <div className="text-[#0052CC] font-semibold text-sm leading-tight">
+            Digital Pemerintahan
+          </div>
+          <div className="text-[#64748B] text-xs leading-tight">
+            Provinsi Lampung
+          </div>
+        </div>
+
+        </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
