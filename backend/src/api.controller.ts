@@ -403,7 +403,7 @@ export class ApiController {
   @Get('regulations')
   async getRegulations() {
     return this.prisma.regulation.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: 'asc' },
     });
   }
 

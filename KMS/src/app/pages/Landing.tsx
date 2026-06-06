@@ -180,7 +180,7 @@ export function Landing() {
         Knowledge Management System
         <br />
         <span className="text-[#D6EFFF]">
-          Pemprov Lampung
+          Digital Pemerintahan
         </span>
       </h1>
 

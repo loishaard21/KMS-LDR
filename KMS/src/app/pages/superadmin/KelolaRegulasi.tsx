@@ -3,17 +3,26 @@ import { Plus, Edit, Trash2, X, Save, FileText, ExternalLink, Search } from "luc
 import { fetchRegulations, createRegulation, updateRegulation, deleteRegulation } from "../../data/api";
 
 const groupColors: Record<string, string> = {
+  "Undang-undang (UU)": "#F59E0B",
   "Peraturan Presiden (Perpres)": "#0052CC",
+  "Keputusan Presiden (Keppres)": "#F59E0B",
   "Peraturan Menteri (Permen)": "#7C3AED",
   "Keputusan Menteri (Kepmen)": "#00B4D8",
-  "Pergub Lampung": "#22C55E",
+  "Peraturan Daerah (Perda)": "#F59E0B",
+  "Peraturan Gubernur (Pergub)": "#F59E0B",
+  "Keputusan Gubernur (Kepgub)": "#F59E0B",
 };
 
 const groups = [
   "Peraturan Presiden (Perpres)",
   "Peraturan Menteri (Permen)",
   "Keputusan Menteri (Kepmen)",
-  "Pergub Lampung",
+  "Undang-undang (UU)",
+  "Keputusan Presiden (Keppres)",
+  "Peraturan Daerah (Perda)",
+  "Peraturan Gubernur (Pergub)",
+  "Keputusan Gubernur (Kepgub)",
+
 ];
 
 function RegulasiForm({

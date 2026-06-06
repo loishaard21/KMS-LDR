@@ -3,12 +3,27 @@ import { Download, FileText } from "lucide-react";
 import { fetchRegulations } from "../data/api";
 
 const groupColors: Record<string, string> = {
+  "Undang-undang (UU)": "#F59E0B",
   "Peraturan Presiden (Perpres)": "#0052CC",
+  "Keputusan Presiden (Keppres)": "#F59E0B",
   "Peraturan Menteri (Permen)": "#7C3AED",
   "Keputusan Menteri (Kepmen)": "#00B4D8",
-  "Pergub Lampung": "#22C55E",
+  "Peraturan Daerah (Perda)": "#F59E0B",
+  "Peraturan Gubernur (Pergub)": "#F59E0B",
+  "Keputusan Gubernur (Kepgub)": "#F59E0B",
 };
 
+// Define explicit order for groups to be used when sorting
+const groupOrder: string[] = [
+  "Undang-undang (UU)",
+  "Peraturan Presiden (Perpres)",
+  "Keputusan Presiden (Keppres)",
+  "Peraturan Menteri (Permen)",
+  "Keputusan Menteri (Kepmen)",
+  "Peraturan Daerah (Perda)",
+  "Peraturan Gubernur (Pergub)",
+  "Keputusan Gubernur (Kepgub)",
+];
 export function Regulasi() {
   const [regulations, setRegulations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,15 +40,26 @@ export function Regulasi() {
       });
   }, []);
 
-  const grouped = regulations.reduce((acc: any[], item: any) => {
+  const grouped = regulations
+  .reduce((acc: any[], item: any) => {
     const existing = acc.find(g => g.group === item.group);
+
     if (existing) {
       existing.items.push(item);
     } else {
-      acc.push({ group: item.group, items: [item] });
+      acc.push({
+        group: item.group,
+        items: [item],
+      });
     }
+
     return acc;
-  }, []);
+  }, [])
+  .sort(
+    (a, b) =>
+      groupOrder.indexOf(a.group) -
+      groupOrder.indexOf(b.group)
+  );
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
