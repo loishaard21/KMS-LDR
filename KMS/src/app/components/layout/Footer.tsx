@@ -8,9 +8,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-[#0052CC] flex items-center justify-center">
-                <span className="text-white text-sm font-bold">KMS</span>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img src="./logo-lampung.png" alt="Logo provinsi Lampung" className="w-full h-full object-contain" />
               </div>
               <div>
                 <div className="text-white font-semibold">Pemerintahan Digital Provinsi Lampung</div>

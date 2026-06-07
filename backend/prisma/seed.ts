@@ -315,7 +315,7 @@ async function main() {
       description: 'Standar keamanan informasi dan proteksi data di lingkungan instansi pemerintah',
       icon: '🔐',
       type: 'PDF',
-      size: '1.8 MB',
+      size: '1.8 M B',
       url: 'https://drive.google.com/example-materi2',
     },
     {

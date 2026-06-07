@@ -292,7 +292,7 @@ export function Landing() {
                 title: "Jadwal",
                 desc: "Pantau seluruh agenda seminar dan pelatihan yang akan datang secara lengkap dan terstruktur.",
                 color: "#0052CC",
-                to: "/jadwal",
+                to: "/seminar",
               },
               {
                 icon: FileText,
