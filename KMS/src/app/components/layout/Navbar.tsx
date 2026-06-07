@@ -42,7 +42,7 @@ export function Navbar() {
 
         <div className="hidden sm:block">
           <div className="text-[#0052CC] font-semibold text-sm leading-tight">
-            Digital Pemerintahan
+            Pemerintahan Digital
           </div>
           <div className="text-[#64748B] text-xs leading-tight">
             Provinsi Lampung

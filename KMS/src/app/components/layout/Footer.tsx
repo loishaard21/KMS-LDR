@@ -13,7 +13,7 @@ export function Footer() {
                 <span className="text-white text-sm font-bold">KMS</span>
               </div>
               <div>
-                <div className="text-white font-semibold">KMS Pemprov Lampung</div>
+                <div className="text-white font-semibold">Pemerintahan Digital Provinsi Lampung</div>
                 <div className="text-[#94A3B8] text-xs">Knowledge Management System</div>
               </div>
             </div>
@@ -23,7 +23,7 @@ export function Footer() {
             <div className="space-y-2">
               <div className="flex items-start gap-2 text-[#94A3B8] text-sm">
                 <MapPin size={14} className="mt-0.5 flex-shrink-0 text-[#00B4D8]" />
-                <span>Jl. W. R. Monginsidi No. 69, Bandar Lampung 35215</span>
+                <span>Jalan Wolter Monginsidi Nomor 69 Telukbetung, Bandar Lampung 35215</span>
               </div>
               <div className="flex items-center gap-2 text-[#94A3B8] text-sm">
                 <Phone size={14} className="text-[#00B4D8]" />
@@ -31,7 +31,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2 text-[#94A3B8] text-sm">
                 <Mail size={14} className="text-[#00B4D8]" />
-                <span>kominfo@lampungprov.go.id</span>
+                <span>diskominfotik@lampungprov.go.id</span>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@ export function Footer() {
               {[
                 { label: "Beranda", to: "/" },
                 { label: "Seminar", to: "/seminar" },
-                { label: "Jadwal", to: "/jadwal" },
+                { label: "Panduan", to: "/panduan" },
                 { label: "Regulasi", to: "/regulasi" },
                 { label: "Artikel & Berita", to: "/artikel" },
                 { label: "Evaluasi", to: "/evaluasi" },
@@ -79,7 +79,7 @@ export function Footer() {
       <div className="border-t border-[#2D3748]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-2">
           <p className="text-[#64748B] text-xs">
-            © 2025 Dinas Komunikasi dan Informatika Provinsi Lampung. LOISHA DIVA .
+            © 2025 Dinas Komunikasi dan Informatika Provinsi Lampung. LOISHA DIVA . REIZA
           </p>
         </div>
       </div>
