@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Beranda", path: "/" },
+  { label: "Beranda", path: "/beranda" },
   { label: "Seminar", path: "/seminar" },
   { label: "Materi", path: "/materi" },
   { label: "Panduan", path: "/panduan" }, // ✅ FIX DI SINI

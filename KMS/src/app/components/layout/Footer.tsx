@@ -41,7 +41,7 @@ export function Footer() {
             <h4 className="text-white font-semibold mb-4 text-sm">Navigasi</h4>
             <ul className="space-y-2">
               {[
-                { label: "Beranda", to: "/" },
+                { label: "Beranda", to: "/beranda" },
                 { label: "Seminar", to: "/seminar" },
                 { label: "Panduan", to: "/panduan" },
                 { label: "Regulasi", to: "/regulasi" },
