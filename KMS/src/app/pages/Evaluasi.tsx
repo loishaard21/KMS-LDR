@@ -131,7 +131,7 @@ export function Evaluasi() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
         <p className="text-[#0052CC] text-sm font-medium mb-1">Penilaian</p>
-        <h1 className="text-2xl font-bold text-[#1A2332] mb-1">Evaluasi SPBE</h1>
+        <h1 className="text-2xl font-bold text-[#1A2332] mb-1">Evaluasi</h1>
         <p className="text-[#64748B] text-sm">Rekap hasil evaluasi kegiatan seminar dan pelatihan Pemprov Lampung. Data bersifat publik dan hanya dapat dibaca.</p>
       </div>
 
