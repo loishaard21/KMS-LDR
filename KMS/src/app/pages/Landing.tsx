@@ -147,7 +147,7 @@ export function Landing() {
   <div
     className="absolute inset-0 bg-center bg-cover"
     style={{
-      backgroundImage: "url('./public/pemprov.png')",
+      backgroundImage: "url('./pemrov.png')",
     }}
   />
 
