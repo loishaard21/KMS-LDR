@@ -68,7 +68,9 @@ export class ApiController {
     if (body.name !== undefined) updateData.name = body.name;
     if (body.email !== undefined) updateData.email = body.email;
     if (body.password !== undefined) updateData.password = body.password;
-    if (body.role !== undefined) updateData.role = body.role === 'superadmin' ? Role.SUPERADMIN : Role.OPERATOR;
+    if (body.role !== undefined)
+      updateData.role =
+        body.role === 'superadmin' ? Role.SUPERADMIN : Role.OPERATOR;
     if (body.status !== undefined) updateData.status = body.status;
     if (body.lastLogin !== undefined) updateData.lastLogin = body.lastLogin;
 
@@ -102,9 +104,17 @@ export class ApiController {
       data: {
         title: body.title,
         category: body.category,
-        date: body.date || new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        date:
+          body.date ||
+          new Date().toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
         excerpt: body.excerpt,
-        cover: body.cover || 'https://images.unsplash.com/photo-1613441589134-3fc7f95a3e16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600',
+        cover:
+          body.cover ||
+          'https://images.unsplash.com/photo-1613441589134-3fc7f95a3e16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600',
         content: body.content,
         authorId: body.authorId,
       },
@@ -179,7 +189,9 @@ export class ApiController {
         requirements: body.requirements || [],
         organizer: body.organizer,
         organizerLogo: body.organizerLogo || 'https://i.pravatar.cc/80?img=5',
-        cover: body.cover || 'https://images.unsplash.com/photo-1616992510024-f1293eb00e41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800',
+        cover:
+          body.cover ||
+          'https://images.unsplash.com/photo-1616992510024-f1293eb00e41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800',
         daftarType: body.daftarType || 'Google Form',
         daftarUrl: body.daftarUrl || '',
         certificateUrl: body.certificateUrl || '',
@@ -203,8 +215,10 @@ export class ApiController {
         date: body.date,
         time: body.time,
         location: body.location,
-        capacity: body.capacity !== undefined ? Number(body.capacity) : undefined,
-        registered: body.registered !== undefined ? Number(body.registered) : undefined,
+        capacity:
+          body.capacity !== undefined ? Number(body.capacity) : undefined,
+        registered:
+          body.registered !== undefined ? Number(body.registered) : undefined,
         description: body.description,
         requirements: body.requirements,
         organizer: body.organizer,
@@ -337,7 +351,13 @@ export class ApiController {
         nip: body.nip,
         agency: body.agency,
         seminarTitle: body.seminarTitle,
-        date: body.date || new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        date:
+          body.date ||
+          new Date().toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
         status: body.status || 'Confirmed',
         seminarId: body.seminarId || null,
       },
@@ -386,7 +406,13 @@ export class ApiController {
         content: body.content,
         hasFile: body.hasFile || false,
         fileUrl: body.fileUrl,
-        date: body.date || new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        date:
+          body.date ||
+          new Date().toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
         seminarId: body.seminarId,
       },
     });
@@ -496,8 +522,16 @@ export class ApiController {
       data: {
         title: body.title,
         description: body.description,
-        imageUrl: body.imageUrl || 'https://images.unsplash.com/photo-1613441589134-3fc7f95a3e16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600',
-        date: body.date || new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        imageUrl:
+          body.imageUrl ||
+          'https://images.unsplash.com/photo-1613441589134-3fc7f95a3e16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600',
+        date:
+          body.date ||
+          new Date().toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
         authorId: body.authorId || null,
       },
     });
