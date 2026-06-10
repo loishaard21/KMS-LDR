@@ -371,16 +371,16 @@ async function main() {
   // 6. Seed Regulations
   const regulationsData = [
     // Perpres
-    { group: 'Peraturan Presiden (Perpres)', title: 'Perpres No. 95 Tahun 2018 tentang Sistem Pemerintahan Berbasis Elektronik (SPBE)', url: '#' },
-    { group: 'Peraturan Presiden (Perpres)', title: 'Perpres No. 39 Tahun 2019 tentang Satu Data Indonesia', url: '#' },
-    { group: 'Peraturan Presiden (Perpres)', title: 'Perpres No. 132 Tahun 2022 tentang Arsitektur Sistem Pemerintahan Berbasis Elektronik Nasional', url: '#' },
+    { group: 'Peraturan Presiden', title: 'Perpres No. 95 Tahun 2018 tentang Sistem Pemerintahan Berbasis Elektronik (SPBE)', url: '#' },
+    { group: 'Peraturan Presiden', title: 'Perpres No. 39 Tahun 2019 tentang Satu Data Indonesia', url: '#' },
+    { group: 'Peraturan Presiden', title: 'Perpres No. 132 Tahun 2022 tentang Arsitektur Sistem Pemerintahan Berbasis Elektronik Nasional', url: '#' },
     // Permen
-    { group: 'Peraturan Menteri (Permen)', title: 'Permen PANRB No. 59 Tahun 2020 tentang Pemantauan dan Evaluasi SPBE', url: '#' },
-    { group: 'Peraturan Menteri (Permen)', title: 'Permen Kominfo No. 8 Tahun 2019 tentang Penyelenggaraan Urusan Pemerintahan Konkuren Bidang Komunikasi dan Informatika', url: '#' },
-    { group: 'Peraturan Menteri (Permen)', title: 'Permen PANRB No. 5 Tahun 2020 tentang Pedoman Manajemen Risiko SPBE', url: '#' },
+    { group: 'Peraturan Menteri', title: 'Permen PANRB No. 59 Tahun 2020 tentang Pemantauan dan Evaluasi SPBE', url: '#' },
+    { group: 'Peraturan Menteri', title: 'Permen Kominfo No. 8 Tahun 2019 tentang Penyelenggaraan Urusan Pemerintahan Konkuren Bidang Komunikasi dan Informatika', url: '#' },
+    { group: 'Peraturan Menteri', title: 'Permen PANRB No. 5 Tahun 2020 tentang Pedoman Manajemen Risiko SPBE', url: '#' },
     // Kepmen
-    { group: 'Keputusan Menteri (Kepmen)', title: 'Kepmen PANRB No. 1 Tahun 2022 tentang Indeks SPBE Kementerian/Lembaga Tahun 2021', url: '#' },
-    { group: 'Keputusan Menteri (Kepmen)', title: 'Kepmen Kominfo No. 1115 Tahun 2018 tentang Standar Interoperabilitas Integrasi Layanan Publik', url: '#' },
+    { group: 'Keputusan Menteri', title: 'Kepmen PANRB No. 1 Tahun 2022 tentang Indeks SPBE Kementerian/Lembaga Tahun 2021', url: '#' },
+    { group: 'Keputusan Menteri', title: 'Kepmen Kominfo No. 1115 Tahun 2018 tentang Standar Interoperabilitas Integrasi Layanan Publik', url: '#' },
     // Pergub
     { group: 'Pergub Lampung', title: 'Pergub Lampung No. 41 Tahun 2023 tentang Penyelenggaraan SPBE di Lingkungan Pemprov Lampung', url: '#' },
     { group: 'Pergub Lampung', title: 'Pergub Lampung No. 12 Tahun 2022 tentang Tata Kelola Data Pemerintah Provinsi Lampung', url: '#' },

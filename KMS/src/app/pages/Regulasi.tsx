@@ -28,8 +28,15 @@ const groupOrder: string[] = [
   "SPBE",
   "Pemerintahan Digital"
 ];
+interface Regulation {
+  id: string;
+  title: string;
+  url: string;
+  group: string;
+}
+
 export function Regulasi() {
-  const [regulations, setRegulations] = useState<any[]>([]);
+  const [regulations, setRegulations] = useState<Regulation[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,7 +52,7 @@ export function Regulasi() {
   }, []);
 
   const grouped = regulations
-  .reduce((acc: any[], item: any) => {
+  .reduce((acc: { group: string; items: Regulation[] }[], item: Regulation) => {
     const existing = acc.find(g => g.group === item.group);
 
     if (existing) {
@@ -58,7 +65,7 @@ export function Regulasi() {
     }
 
     return acc;
-  }, [])
+  }, [] as { group: string; items: Regulation[] }[])
   .sort(
     (a, b) =>
       groupOrder.indexOf(a.group) -
@@ -86,7 +93,7 @@ export function Regulasi() {
                 <h2 className="font-bold text-[#1A2332]">{group.group}</h2>
               </div>
               <div className="space-y-3">
-                {group.items.map(item => (
+                {group.items.map((item: Regulation) => (
                   <div
                     key={item.id}
                     className="bg-white border border-[#E2E8F0] rounded-2xl p-4 flex items-center gap-4 hover:shadow-md transition-shadow group"

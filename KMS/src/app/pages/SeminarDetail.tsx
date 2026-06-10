@@ -99,7 +99,7 @@ export function SeminarDetail() {
           <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6" style={{ boxShadow: "0px 4px 20px rgba(0,82,204,0.05)" }}>
             <h2 className="font-semibold text-[#1A2332] mb-4">Persyaratan & Informasi</h2>
             <ul className="space-y-3">
-              {seminar.requirements.map((req, i) => (
+              {seminar.requirements.map((req: string, i: number) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-[#475569]">
                   <CheckCircle size={16} className="text-[#22C55E] mt-0.5 flex-shrink-0" />
                   <span>{req}</span>
