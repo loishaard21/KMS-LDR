@@ -19,12 +19,9 @@ const operatorMenuItems: MenuItem[] = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/operator/dashboard" },
   { label: "Kelola Seminar", icon: BookOpen, path: "/operator/kelola-seminar" },
   { label: "Kelola Materi", icon: FileText, path: "/operator/kelola-materi" },
-  { label: "Kelola Jadwal", icon: Calendar, path: "/operator/kelola-jadwal" },
   { label: "Kelola Artikel", icon: Newspaper, path: "/operator/kelola-artikel" },
   { label: "Kelola Regulasi", icon: FileText, path: "/operator/kelola-regulasi" },
   { label: "Kelola Evaluasi", icon: BarChart3, path: "/operator/kelola-evaluasi" },
-  { label: "Data Peserta", icon: Users, path: "/operator/data-peserta" },
-  { label: "Upload Informasi", icon: Upload, path: "/operator/upload-informasi" },
   { label: "Profil Saya", icon: User, path: "/operator/profil" },
 ];
 

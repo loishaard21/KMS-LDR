@@ -3,26 +3,30 @@ import { Download, FileText } from "lucide-react";
 import { fetchRegulations } from "../data/api";
 
 const groupColors: Record<string, string> = {
-  "Undang-undang (UU)": "#F59E0B",
-  "Peraturan Presiden (Perpres)": "#0052CC",
-  "Keputusan Presiden (Keppres)": "#F59E0B",
-  "Peraturan Menteri (Permen)": "#7C3AED",
-  "Keputusan Menteri (Kepmen)": "#00B4D8",
-  "Peraturan Daerah (Perda)": "#F59E0B",
-  "Peraturan Gubernur (Pergub)": "#F59E0B",
-  "Keputusan Gubernur (Kepgub)": "#F59E0B",
+  "Undang-undang": "#F59E0B",
+  "Peraturan Presiden": "#0052CC",
+  "Keputusan Presiden": "#F59E0B",
+  "Peraturan Menteri": "#7C3AED",
+  "Keputusan Menteri": "#00B4D8",
+  "Peraturan Daerah": "#F59E0B",
+  "Peraturan Gubernur": "#F59E0B",
+  "Keputusan Gubernur": "#F59E0B",
+  "SPBE": "#0052CC",
+  "Pemerintahan Digital": "#7C3AED",
 };
 
 // Define explicit order for groups to be used when sorting
 const groupOrder: string[] = [
-  "Undang-undang (UU)",
-  "Peraturan Presiden (Perpres)",
-  "Keputusan Presiden (Keppres)",
-  "Peraturan Menteri (Permen)",
-  "Keputusan Menteri (Kepmen)",
-  "Peraturan Daerah (Perda)",
-  "Peraturan Gubernur (Pergub)",
-  "Keputusan Gubernur (Kepgub)",
+  "Undang-undang",
+  "Peraturan Presiden",
+  "Keputusan Presiden",
+  "Peraturan Menteri",
+  "Keputusan Menteri",
+  "Peraturan Daerah",
+  "Peraturan Gubernur",
+  "Keputusan Gubernur",
+  "SPBE",
+  "Pemerintahan Digital"
 ];
 export function Regulasi() {
   const [regulations, setRegulations] = useState<any[]>([]);
