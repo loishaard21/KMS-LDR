@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/auth/providers/auth_provider.dart';
+import '../../features/guest/screens/guest_dashboard_screen.dart';
 
 class MenuItem {
   final String label;
@@ -215,6 +216,10 @@ class AdminDrawer extends ConsumerWidget {
                   onTap: () {
                     Navigator.pop(context);
                     ref.read(authProvider.notifier).logout();
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const GuestDashboardScreen()),
+                      (route) => false,
+                    );
                   },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(

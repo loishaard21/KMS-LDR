@@ -79,7 +79,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         final articles = artsJson.map((a) => ArticleModel.fromJson(a)).toList();
 
         // Calculate certificates (seminar has certificateUrl and it is not empty)
-        final certsCount = seminars.where((s) => s.certificateUrl.isNotEmpty).length;
+        final certsCount = seminars.where((s) => s.certificateUrl != null && s.certificateUrl!.isNotEmpty).length;
 
         // Calculate distribution
         final Map<String, int> catCounts = {};
