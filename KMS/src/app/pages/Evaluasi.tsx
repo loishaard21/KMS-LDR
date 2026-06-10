@@ -171,18 +171,9 @@ export function Evaluasi() {
                     <td className="px-5 py-4 text-sm text-[#64748B]">{item.period}</td>
                     <td className="px-5 py-4">
                       {item.score > 0 ? (
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-[#1A2332]">{item.score}</span>
-                          <div className="w-16 h-1.5 bg-[#E2E8F0] rounded-full overflow-hidden">
-                            <div
-                              className="h-full rounded-full"
-                              style={{
-                                width: `${item.score}%`,
-                                backgroundColor: item.score >= 85 ? "#22C55E" : item.score >= 70 ? "#F59E0B" : "#EF4444"
-                              }}
-                            />
-                          </div>
-                        </div>
+                        <span className="text-sm font-semibold text-[#1A2332]">
+  {item.score}
+</span>
                       ) : (
                         <span className="text-sm text-[#94A3B8]">—</span>
                       )}
