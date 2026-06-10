@@ -101,18 +101,7 @@ function SeminarFormModal({ onClose, seminar, onSave }: { onClose: () => void; s
               </select>
             </div>
             {/* Kapasitas & Jumlah Terdaftar */}
-            <div>
-              <label className="block text-sm font-medium text-[#374151] mb-1.5">Kapasitas Maksimal <span className="text-red-500">*</span></label>
-              <input
-                required
-                type="number"
-                min={1}
-                value={form.capacity}
-                onChange={e => handleChange("capacity", e.target.value)}
-                placeholder="100"
-                className="w-full px-4 py-2.5 text-sm border border-[#E2E8F0] rounded-xl bg-white focus:border-[#0052CC] focus:ring-2 focus:ring-[#0052CC]/20 outline-none transition-all"
-              />
-            </div>
+            
             <div>
               <label className="block text-sm font-medium text-[#374151] mb-1.5">
                 Jumlah Terdaftar
