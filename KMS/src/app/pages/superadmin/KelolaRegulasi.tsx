@@ -3,25 +3,25 @@ import { Plus, Edit, Trash2, X, Save, FileText, ExternalLink, Search } from "luc
 import { fetchRegulations, createRegulation, updateRegulation, deleteRegulation } from "../../data/api";
 
 const groupColors: Record<string, string> = {
-  "Undang-undang (UU)": "#F59E0B",
-  "Peraturan Presiden (Perpres)": "#0052CC",
-  "Keputusan Presiden (Keppres)": "#F59E0B",
-  "Peraturan Menteri (Permen)": "#7C3AED",
-  "Keputusan Menteri (Kepmen)": "#00B4D8",
-  "Peraturan Daerah (Perda)": "#F59E0B",
-  "Peraturan Gubernur (Pergub)": "#F59E0B",
-  "Keputusan Gubernur (Kepgub)": "#F59E0B",
+  "Undang-undang": "#F59E0B",
+  "Peraturan Presiden": "#0052CC",
+  "Keputusan Presiden": "#F59E0B",
+  "Peraturan Menteri": "#7C3AED",
+  "Keputusan Menteri": "#00B4D8",
+  "Peraturan Daerah": "#F59E0B",
+  "Peraturan Gubernur": "#F59E0B",
+  "Keputusan Gubernur": "#F59E0B",
 };
 
 const groups = [
-  "Peraturan Presiden (Perpres)",
-  "Peraturan Menteri (Permen)",
-  "Keputusan Menteri (Kepmen)",
-  "Undang-undang (UU)",
-  "Keputusan Presiden (Keppres)",
-  "Peraturan Daerah (Perda)",
-  "Peraturan Gubernur (Pergub)",
-  "Keputusan Gubernur (Kepgub)",
+  "Peraturan Presiden",
+  "Peraturan Menteri",
+  "Keputusan Menteri",
+  "Undang-undang",
+  "Keputusan Presiden",
+  "Peraturan Daerah",
+  "Peraturan Gubernur",
+  "Keputusan Gubernur",
 
 ];
 

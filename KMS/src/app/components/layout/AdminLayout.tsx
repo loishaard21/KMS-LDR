@@ -68,9 +68,11 @@ export function AdminLayout() {
       {/* Brand */}
       <div className="p-5 border-b border-[#2D3748]">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#0052CC] flex items-center justify-center flex-shrink-0">
-            <span className="text-white text-xs font-bold">KMS</span>
-          </div>
+          <img
+          src="/logo-lampung.png"
+          alt="KMS Logo"
+          className="w-9 h-9 object-contain flex-shrink-0"
+        />
           <div>
             <div className="text-white font-semibold text-sm leading-tight">KMS Pemprov</div>
             <div className="text-[#64748B] text-xs">Lampung</div>
