@@ -32,7 +32,7 @@ class _KelolaArtikelScreenState extends ConsumerState<KelolaArtikelScreen> {
     final contentCtrl = TextEditingController(text: article?.content ?? '');
     String selectedCategory = article?.category ?? 'Berita';
 
-    final categories = ['Berita', 'Artikel', 'Opini', 'Pengumuman'];
+    final categories = ['Form', 'Berita', 'Sosialisasi', 'Regulasi', 'Panduan SPBE'];
 
     await showModalBottomSheet(
       context: context,

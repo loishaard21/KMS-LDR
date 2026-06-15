@@ -20,8 +20,40 @@ class ParticipantNotifier extends StateNotifier<ParticipantState> {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
       final response = await _api.get('participants');
-      state = state.copyWith(isLoading: false, participants: (response as List).map((e) => ParticipantModel.fromJson(e)).toList());
-    } catch (e) { state = state.copyWith(isLoading: false, errorMessage: e.toString()); }
+      state = state.copyWith(
+        isLoading: false,
+        participants: (response as List).map((e) => ParticipantModel.fromJson(e)).toList(),
+      );
+    } catch (e) {
+      state = state.copyWith(isLoading: false, errorMessage: e.toString());
+    }
+  }
+
+  Future<bool> update(String id, Map<String, dynamic> data) async {
+    try {
+      await _api.put('participants/$id', data);
+      // Update local state optimistically
+      state = state.copyWith(
+        participants: state.participants.map((p) {
+          if (p.id == id) {
+            return ParticipantModel(
+              id: p.id,
+              name: p.name,
+              nip: p.nip,
+              agency: p.agency,
+              seminarTitle: p.seminarTitle,
+              date: p.date,
+              status: data['status'] as String? ?? p.status,
+              seminarId: p.seminarId,
+            );
+          }
+          return p;
+        }).toList(),
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
 

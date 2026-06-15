@@ -23,9 +23,9 @@ class _AdminAddPostScreenState extends ConsumerState<AdminAddPostScreen> {
   String _selectedStatus = 'Pendaftaran Dibuka';
   bool _isLoading = false;
 
-  final _articleCategories = ['Berita', 'Artikel', 'Opini', 'Pengumuman'];
-  final _seminarCategories = ['Teknis', 'Manajerial', 'Fungsional', 'Soft Skill'];
-  final _seminarStatuses = ['Pendaftaran Dibuka', 'Pendaftaran Ditutup', 'Selesai', 'Dibatalkan'];
+  final _articleCategories = ['Form', 'Berita', 'Sosialisasi', 'Regulasi', 'Panduan SPBE'];
+  final _seminarCategories = ['SPBE', 'Kompetensi', 'Kepemimpinan', 'Teknis', 'Fungsional'];
+  final _seminarStatuses = ['Pendaftaran Dibuka', 'Kuota Penuh', 'Selesai'];
 
   @override
   void dispose() {

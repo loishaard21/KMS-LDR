@@ -7,6 +7,7 @@ import '../../../shared/widgets/status_badge.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../providers/dashboard_provider.dart';
 import '../../../shared/models/seminar_model.dart';
+import '../../admin/providers/seminar_provider.dart';
 
 // Import management screens
 import '../../users/screens/operator_management_screen.dart';
@@ -27,6 +28,7 @@ import '../../admin/screens/kelola_seminar_screen.dart';
 import '../../admin/screens/kelola_materi_screen.dart';
 import '../../admin/screens/kelola_artikel_screen.dart';
 import '../../admin/screens/kelola_evaluasi_screen.dart';
+import '../../admin/screens/data_peserta_screen.dart';
 
 // Monthly chart data matching the Next.js reference
 const _monthlyData = [
@@ -50,7 +52,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   // Drawer index — directly maps to MenuItem.index in admin_drawer.dart
   int _drawerIndex = 0;
 
-  // ─── Admin screens (index 0–6 matching adminMenuItems) ───────────────────
+  // ─── Admin screens (index 0–7 matching adminMenuItems) ───────────────────
   // 0: Dashboard
   // 1: All Posts
   // 2: Add Post
@@ -58,6 +60,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   // 4: Kelola Regulasi
   // 5: Agenda
   // 6: Kontak
+  // 7: Akun Operator
   static const List<Widget> _adminScreens = [
     _SuperAdminDashboard(),         // 0
     AdminPostListScreen(),           // 1
@@ -66,22 +69,27 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     KelolaRegulasiScreen(),         // 4
     AgendaScreen(),                  // 5
     ContactScreen(),                 // 6
+    OperatorManagementScreen(),      // 7
   ];
 
-  // ─── Operator screens (index 0–5 matching operatorMenuItems) ─────────────
+  // ─── Operator screens (index 0–7 matching operatorMenuItems) ─────────────
   // 0: Dashboard
   // 1: Kelola Seminar
   // 2: Kelola Materi
   // 3: Kelola Artikel
   // 4: Kelola Regulasi
   // 5: Kelola Evaluasi
+  // 6: Data Peserta
+  // 7: Profil Saya
   static const List<Widget> _operatorScreens = [
     _OperatorDashboardContent(),    // 0
     KelolaSeminarScreen(),          // 1
     KelolaMateriScreen(),           // 2
     KelolaArtikelScreen(),          // 3
-    KelolaRegulasiScreen(),        // 4
-    KelolaEvaluasiScreen(),        // 5
+    KelolaRegulasiScreen(),         // 4
+    KelolaEvaluasiScreen(),         // 5
+    DataPesertaScreen(),            // 6
+    ProfileScreen(),                // 7
   ];
 
   @override
@@ -163,8 +171,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
     // App bar title changes based on selected screen
     final titles = isAdmin
-        ? ['Dashboard', 'All Posts', 'Add Post', 'Kelola Panduan', 'Kelola Regulasi', 'Agenda', 'Kontak']
-        : ['Dashboard', 'Kelola Seminar', 'Kelola Materi', 'Kelola Artikel', 'Kelola Regulasi', 'Kelola Evaluasi'];
+        ? ['Dashboard', 'All Posts', 'Add Post', 'Kelola Panduan', 'Kelola Regulasi', 'Agenda', 'Kontak', 'Akun Operator']
+        : ['Dashboard', 'Kelola Seminar', 'Kelola Materi', 'Kelola Artikel', 'Kelola Regulasi', 'Kelola Evaluasi', 'Data Peserta', 'Profil Saya'];
 
     final currentTitle = titles[safeIndex];
 
@@ -1142,11 +1150,7 @@ class _SeminarTableRow extends ConsumerWidget {
                         color: const Color(0xFFD97706),
                         bg: const Color(0xFFFFFBEB),
                         tooltip: 'Kelola',
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Fitur kelola seminar hanya tersedia di web KMS')),
-                          );
-                        },
+                        onTap: () => _showEditSeminarDialog(context, ref),
                       ),
                       const SizedBox(width: 4),
                       _ActionBtn(
@@ -1167,6 +1171,199 @@ class _SeminarTableRow extends ConsumerWidget {
     );
   }
 
+  Future<void> _showEditSeminarDialog(BuildContext context, WidgetRef ref) async {
+    final titleCtrl = TextEditingController(text: seminar.title);
+    final dateCtrl = TextEditingController(text: seminar.date);
+    final locationCtrl = TextEditingController(text: seminar.location);
+    final capacityCtrl = TextEditingController(text: seminar.capacity.toString());
+    String selectedCategory = seminar.category.isNotEmpty ? seminar.category : 'Teknis';
+    String selectedStatus = seminar.status.isNotEmpty ? seminar.status : 'Pendaftaran Dibuka';
+
+    final categories = ['SPBE', 'Kompetensi', 'Kepemimpinan', 'Teknis', 'Fungsional'];
+    if (!categories.contains(selectedCategory)) {
+      categories.add(selectedCategory);
+    }
+    final statuses = ['Pendaftaran Dibuka', 'Kuota Penuh', 'Selesai'];
+    if (!statuses.contains(selectedStatus)) {
+      statuses.add(selectedStatus);
+    }
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setModalState) => Container(
+          height: MediaQuery.of(context).size.height * 0.85,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 12),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE2E8F0),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Edit Seminar',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1A2332),
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 16,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Judul Seminar', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF475569))),
+                      const SizedBox(height: 6),
+                      TextField(
+                        controller: titleCtrl,
+                        decoration: _dialogInputDecoration('Masukkan judul seminar'),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Kategori', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF475569))),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<String>(
+                        value: selectedCategory,
+                        dropdownColor: Colors.white,
+                        decoration: _dialogInputDecoration('Pilih kategori'),
+                        items: categories.map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                        onChanged: (v) => setModalState(() => selectedCategory = v!),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Tanggal', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF475569))),
+                      const SizedBox(height: 6),
+                      TextField(
+                        controller: dateCtrl,
+                        decoration: _dialogInputDecoration('YYYY-MM-DD', icon: Icons.calendar_today_outlined),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Lokasi', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF475569))),
+                      const SizedBox(height: 6),
+                      TextField(
+                        controller: locationCtrl,
+                        decoration: _dialogInputDecoration('Masukkan lokasi'),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Kapasitas', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF475569))),
+                      const SizedBox(height: 6),
+                      TextField(
+                        controller: capacityCtrl,
+                        keyboardType: TextInputType.number,
+                        decoration: _dialogInputDecoration('0'),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Status', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF475569))),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<String>(
+                        value: selectedStatus,
+                        dropdownColor: Colors.white,
+                        decoration: _dialogInputDecoration('Pilih status'),
+                        items: statuses.map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                        onChanged: (v) => setModalState(() => selectedStatus = v!),
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0052CC),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                          onPressed: () async {
+                            if (titleCtrl.text.isEmpty) return;
+                            final data = {
+                              'title': titleCtrl.text,
+                              'category': selectedCategory,
+                              'mode': seminar.mode,
+                              'status': selectedStatus,
+                              'date': dateCtrl.text,
+                              'time': seminar.time,
+                              'speaker': seminar.speaker,
+                              'speakerRole': seminar.speakerRole,
+                              'location': locationCtrl.text,
+                              'capacity': int.tryParse(capacityCtrl.text) ?? 0,
+                              'registered': seminar.registered,
+                              'organizer': seminar.organizer,
+                              'description': seminar.description,
+                              'daftarType': seminar.daftarType,
+                              'daftarUrl': seminar.daftarUrl,
+                              'certificateUrl': seminar.certificateUrl,
+                              'authorId': seminar.authorId,
+                            };
+                            final success = await ref.read(seminarProvider.notifier).update(seminar.id, data);
+                            if (success && ctx.mounted) {
+                              Navigator.pop(ctx);
+                              await ref.read(dashboardProvider.notifier).loadDashboard();
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Seminar berhasil diperbarui'),
+                                    backgroundColor: Color(0xFF22C55E),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          child: const Text(
+                            'Perbarui Seminar',
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  InputDecoration _dialogInputDecoration(String hint, {IconData? icon}) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
+      prefixIcon: icon != null ? Icon(icon, size: 18, color: const Color(0xFF94A3B8)) : null,
+      filled: true,
+      fillColor: const Color(0xFFF8FAFC),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE2E8F0))),
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE2E8F0))),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFF0052CC))),
+    );
+  }
 }
 
 class _ActionBtn extends StatelessWidget {

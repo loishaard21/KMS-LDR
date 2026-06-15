@@ -28,9 +28,10 @@ const List<MenuItem> adminMenuItems = [
   MenuItem(label: 'Kelola Regulasi', icon: Icons.gavel_outlined, activeIcon: Icons.gavel, index: 4),
   MenuItem(label: 'Agenda', icon: Icons.calendar_month_outlined, activeIcon: Icons.calendar_month, index: 5),
   MenuItem(label: 'Kontak', icon: Icons.support_agent_outlined, activeIcon: Icons.support_agent, index: 6),
+  MenuItem(label: 'Akun Operator', icon: Icons.people_outline, activeIcon: Icons.people, index: 7),
 ];
 
-// Operator menu items — matches user spec exactly
+// Operator menu items — matches KMS web sidebar exactly
 const List<MenuItem> operatorMenuItems = [
   MenuItem(label: 'Dashboard', icon: Icons.dashboard_outlined, activeIcon: Icons.dashboard, index: 0),
   MenuItem(label: 'Kelola Seminar', icon: Icons.book_outlined, activeIcon: Icons.book, index: 1),
@@ -38,6 +39,8 @@ const List<MenuItem> operatorMenuItems = [
   MenuItem(label: 'Kelola Artikel', icon: Icons.newspaper_outlined, activeIcon: Icons.newspaper, index: 3),
   MenuItem(label: 'Kelola Regulasi', icon: Icons.gavel_outlined, activeIcon: Icons.gavel, index: 4),
   MenuItem(label: 'Kelola Evaluasi', icon: Icons.bar_chart_outlined, activeIcon: Icons.bar_chart, index: 5),
+  MenuItem(label: 'Data Peserta', icon: Icons.people_outline, activeIcon: Icons.people, index: 6),
+  MenuItem(label: 'Profil Saya', icon: Icons.person_outline, activeIcon: Icons.person, index: 7),
 ];
 
 class AdminDrawer extends ConsumerWidget {
